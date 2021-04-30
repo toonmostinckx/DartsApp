@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Initializing">
+
+    <EditText
+        android:id="@+id/txtPlayer4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/player4"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/txtPlayer3"
+        app:layout_constraintTop_toBottomOf="@+id/txtPlayer3" />
+
+    <EditText
+        android:id="@+id/txtPlayer3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/player3"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/txtPlayer1"
+        app:layout_constraintTop_toBottomOf="@+id/txtPlayer2" />
+
+    <TextView
+        android:id="@+id/txtPlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/numberofplayers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnMinus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onBtnMinus_Clicked"
+        android:text="@string/minus"
+        app:layout_constraintEnd_toStartOf="@+id/numbersOfPlayers"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPlayers" />
+
+    <TextView
+        android:id="@+id/numbersOfPlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMinus"
+        app:layout_constraintEnd_toStartOf="@+id/btnPlus"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnMinus" />
+
+    <Button
+        android:id="@+id/btnPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onBtnPlus_Clicked"
+        android:text="@string/plus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/numbersOfPlayers"
+        app:layout_constraintTop_toTopOf="@+id/btnMinus" />
+
+    <TextView
+        android:id="@+id/txtGamemode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/gamemode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPlayer4" />
+
+    <CheckBox
+        android:id="@+id/gameMode_501"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:onClick="enableOneGameMode"
+        android:text="@string/_501"
+        app:layout_constraintStart_toStartOf="@+id/txtGamemode"
+        app:layout_constraintTop_toBottomOf="@+id/txtGamemode" />
+
+    <CheckBox
+        android:id="@+id/gameMode_301"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="enableOneGameMode"
+        android:text="@string/_301"
+        app:layout_constraintStart_toStartOf="@+id/gameMode_501"
+        app:layout_constraintTop_toBottomOf="@+id/gameMode_501" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="onBtnSubmit_Clicked"
+        android:text="@string/submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/txtPlayer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/player1"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/txtPlayers"
+        app:layout_constraintTop_toBottomOf="@+id/btnMinus" />
+
+    <EditText
+        android:id="@+id/txtPlayer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/player2"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/txtPlayers"
+        app:layout_constraintTop_toBottomOf="@+id/txtPlayer1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
