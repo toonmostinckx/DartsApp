@@ -1,3 +1,2 @@
 # Darts app
-
-Why hello there
+Darts game tracker made for Software Development at Group T
