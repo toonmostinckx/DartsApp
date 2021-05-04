@@ -2,10 +2,12 @@ package com.example.dartsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -15,19 +17,19 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class Signin extends AppCompatActivity implements View.OnClickListener {
+public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int RC_SIGN_IN = 0;
+    private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
 
-    String email;
-    String name;
-    String ID;
+    private EditText email;
+    private EditText password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
+        setContentView(R.layout.activity_loginscreen);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -40,6 +42,9 @@ public class Signin extends AppCompatActivity implements View.OnClickListener {
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
+
+        email = (EditText) findViewById(R.id.Manual_Signin_Email);
+        password = (EditText) findViewById(R.id.Manual_Signin_Password);
     }
 
     @Override
@@ -48,22 +53,20 @@ public class Signin extends AppCompatActivity implements View.OnClickListener {
         // the GoogleSignInAccount will be non-null.
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        //updateUI(account);
+        updateUI(account);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.sign_in_button:
-                signIn();
-                break;
-            case R.id.Manual_Signin_Button:
-                manualSignIn();
+        if (v.getId() == R.id.sign_in_button) {
+            signIn();
+        } else if (v.getId() == R.id.Manual_Signin_Button){
+            manualSignIn();
         }
     }
 
     private void manualSignIn() {
-        //Do some stuff
+        // do some stuff
     }
 
     private void signIn() {
@@ -100,8 +103,9 @@ public class Signin extends AppCompatActivity implements View.OnClickListener {
 
     private void updateUI(GoogleSignInAccount account) {
         if(account == null){return;}
-        email = account.getEmail();
-        name = account.getGivenName();
-        ID = account.getId();
+
+        String googleEmail = account.getEmail();
+        String name = account.getGivenName();
+        String ID = account.getId();
     }
 }

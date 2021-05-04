@@ -17,4 +17,7 @@
     <string name="player4">player4</string>
     <string name="submit_succeed">submit succeed</string>
     <string name="_0">0</string>
+    <string name="sign_in">Sign in</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>
