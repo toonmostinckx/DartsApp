@@ -59,17 +59,21 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.sign_in_button) {
-            signIn();
+            googleSignIn();
         } else if (v.getId() == R.id.Manual_Signin_Button){
             manualSignIn();
         }
     }
 
     private void manualSignIn() {
-        // do some stuff
+        // check if the account is valid and registered
+        String currentEmail = email.getText().toString();
+        String currentPassWord = password.getText().toString();
+
+
     }
 
-    private void signIn() {
+    private void googleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
