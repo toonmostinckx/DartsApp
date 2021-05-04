@@ -17,6 +17,18 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RC_SIGN_IN = 1;
@@ -24,6 +36,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     private EditText email;
     private EditText password;
+    private RequestQueue requestQueue;
 
 
     @Override
@@ -69,8 +82,47 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         // check if the account is valid and registered
         String currentEmail = email.getText().toString();
         String currentPassWord = password.getText().toString();
+    }
 
+    public void theRightWayJSON( View v )
+    {
+        requestQueue = Volley.newRequestQueue( this );
+        String requestURL = "https://studev.groept.be/api/a20sd313/peopleWithEmail";
 
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        try {
+                            StringBuilder responseString = new StringBuilder();
+                            for( int i = 0; i < response.length(); i++ )
+                            {
+                                JSONObject curObject = response.getJSONObject( i );
+                                responseString.append(curObject.getString("name")).append(" : ").append(curObject.getString("email")).append("\n");
+                            }
+                            txtResponse.setText(responseString.toString());
+                        }
+                        catch( JSONException e )
+                        {
+                            Log.e( "Database", e.getMessage(), e );
+                        }
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        txtResponse.setText( error.getLocalizedMessage() );
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
     }
 
     private void googleSignIn() {
