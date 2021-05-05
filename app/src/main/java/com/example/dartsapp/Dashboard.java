@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,11 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     GoogleSignInClient mGoogleSignInClient;
     Button signOutButton;
     Button newGameButton;
+    Button accountButton;
+    String name;
+    String email;
+    String ID;
+    String profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +39,18 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         newGameButton = (Button) findViewById(R.id.NewGameButton);
         newGameButton.setOnClickListener(this);
 
+        accountButton = (Button) findViewById(R.id.AccountScreenButton);
+        accountButton.setOnClickListener(this);
+
         //Update greeting text according to the intent given
         TextView greeting = (TextView) findViewById(R.id.WelcomeUser);
         Bundle intent = getIntent().getExtras();
-        String welcome = "Welcome " + intent.get("name").toString();
+        name = intent.get("name").toString();
+        email = intent.get("email").toString();
+        ID = intent.get("ID").toString();
+        profilePicture = intent.get("GooglePF").toString();
+
+        String welcome = "Welcome " + name;
         greeting.setText(welcome);
 
         //Configure GSC for signout
@@ -51,6 +65,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         }
         else if(v.getId() == R.id.NewGameButton){
             startNewGame();
+        }
+        else if(v.getId() == R.id.AccountScreenButton){
+            goToAccountScreen();
         }
     }
 
@@ -71,8 +88,13 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         startActivity(intent);
     }
 
-    void startNewGame(){
+    private void startNewGame(){
         Intent intent = new Intent(this, InitializingGame.class);
+        startActivity(intent);
+    }
+
+    private void goToAccountScreen(){
+        Intent intent = new Intent(this, AccountScreen.class);
         startActivity(intent);
     }
 }

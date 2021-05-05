@@ -3,6 +3,7 @@ package com.example.dartsapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -46,6 +47,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestProfile()
                 .requestEmail()
                 .build();
 
@@ -170,6 +172,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         String email = account.getEmail();
         String name = account.getGivenName();
         String ID = account.getId();
+        Uri profilePicture = account.getPhotoUrl();
 
         String welcomeMessage = "Welcome " + name;
         emailField.setText(welcomeMessage);
@@ -178,7 +181,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         intent.putExtra("email", email);
         intent.putExtra("name", name);
         intent.putExtra("ID", ID);
-
+        if(profilePicture != null){
+            String profilePictureString = profilePicture.toString();
+            intent.putExtra("GooglePF", profilePictureString);
+        }
         startActivity(intent);
     }
 }

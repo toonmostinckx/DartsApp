@@ -6,4 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".AccountScreen">
 
+    <ImageView
+        android:id="@+id/AccountScreen_ProfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/profile_picture_of_the_user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.18"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/AccountScreen_BackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AccountScreen_IDBox"
+        app:layout_constraintVertical_bias="0.79" />
+
+    <TextView
+        android:id="@+id/AccountScreen_EmailBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AccountScreen_EmailBox"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AccountScreen_NameBox"
+        app:layout_constraintVertical_bias="0.050000012" />
+
+    <TextView
+        android:id="@+id/AccountScreen_NameBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AccountName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AccountScreen_ProfilePicture"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <TextView
+        android:id="@+id/AccountScreen_IDBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AccountScreen_EmailBox"
+        app:layout_constraintVertical_bias="0.060000002" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
