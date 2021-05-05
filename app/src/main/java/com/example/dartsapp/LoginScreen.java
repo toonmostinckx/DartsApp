@@ -57,6 +57,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
 
+        //setup the account info text fields
         emailField = (EditText) findViewById(R.id.Manual_Signin_Email);
         passwordField = (EditText) findViewById(R.id.Manual_Signin_Password);
     }
@@ -82,6 +83,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         String currentEmail = emailField.getText().toString();
         String currentPassWord = passwordField.getText().toString();
 
+        //put passhash check in here
         Intent intent = new Intent(this, Dashboard.class);
         intent.putExtra("email", currentEmail);
 

@@ -19,6 +19,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     GoogleSignInClient mGoogleSignInClient;
     Button signOutButton;
+    Button newGameButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         //Configure a listener on the signout button
         signOutButton = (Button) findViewById(R.id.SignoutButton);
         signOutButton.setOnClickListener(this);
+
+        newGameButton = (Button) findViewById(R.id.NewGameButton);
+        newGameButton.setOnClickListener(this);
 
         //Update greeting text according to the intent given
         TextView greeting = (TextView) findViewById(R.id.WelcomeUser);
@@ -45,8 +49,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         if (v.getId() == R.id.SignoutButton) {
             signOut();
         }
+        else if(v.getId() == R.id.NewGameButton){
+            startNewGame();
+        }
     }
 
+    //logs the google account out and returns to the starting screen
     private void signOut() {
         mGoogleSignInClient.signOut()
             .addOnCompleteListener(this, new OnCompleteListener<Void>
@@ -60,6 +68,11 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     private void goToLoginScreen(){
         Intent intent = new Intent(this, LoginScreen.class);
+        startActivity(intent);
+    }
+
+    void startNewGame(){
+        Intent intent = new Intent(this, InitializingGame.class);
         startActivity(intent);
     }
 }
