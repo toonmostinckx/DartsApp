@@ -2,9 +2,9 @@ package com.example.dartsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,7 +22,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -31,11 +30,11 @@ import org.json.JSONObject;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int RC_SIGN_IN = 1;
+    private static final int RC_SIGN_IN =  1;
     GoogleSignInClient mGoogleSignInClient;
 
-    private EditText email;
-    private EditText password;
+    private EditText emailField;
+    private EditText passwordField;
     private RequestQueue requestQueue;
 
 
@@ -46,7 +45,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -56,8 +57,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
 
-        email = (EditText) findViewById(R.id.Manual_Signin_Email);
-        password = (EditText) findViewById(R.id.Manual_Signin_Password);
+        emailField = (EditText) findViewById(R.id.Manual_Signin_Email);
+        passwordField = (EditText) findViewById(R.id.Manual_Signin_Password);
     }
 
     @Override
@@ -66,28 +67,33 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         // the GoogleSignInAccount will be non-null.
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(account);
+        goToDashboardGoogleSignin(account);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.sign_in_button) {
             googleSignIn();
-        } else if (v.getId() == R.id.Manual_Signin_Button){
-            manualSignIn();
         }
     }
 
-    private void manualSignIn() {
+    public void manualSignIn(View v) {
         // check if the account is valid and registered
-        String currentEmail = email.getText().toString();
-        String currentPassWord = password.getText().toString();
+        String currentEmail = emailField.getText().toString();
+        String currentPassWord = passwordField.getText().toString();
+
+        Intent intent = new Intent(this, Dashboard.class);
+        intent.putExtra("email", currentEmail);
+
+        startActivity(intent);
+
+        checkPassHash(v);
     }
 
-    public void theRightWayJSON( View v )
+    private void checkPassHash( View v)
     {
         requestQueue = Volley.newRequestQueue( this );
-        String requestURL = "https://studev.groept.be/api/a20sd313/peopleWithEmail";
+        String requestURL = "https://studev.groept.be/api/a20sd111/checkPassHash";
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
@@ -101,9 +107,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                             for( int i = 0; i < response.length(); i++ )
                             {
                                 JSONObject curObject = response.getJSONObject( i );
-                                responseString.append(curObject.getString("name")).append(" : ").append(curObject.getString("email")).append("\n");
+                                responseString.append(curObject.getString("email")).append(" : ").append(curObject.getString("passhash")).append("\n");
                             }
-                            txtResponse.setText(responseString.toString());
+                            Log.d("Database", String.valueOf(responseString));
                         }
                         catch( JSONException e )
                         {
@@ -117,7 +123,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        txtResponse.setText( error.getLocalizedMessage() );
                     }
                 }
         );
@@ -148,20 +153,30 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-            updateUI(account);
+            goToDashboardGoogleSignin(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
-            updateUI(null);
+            goToDashboardGoogleSignin(null);
         }
     }
 
-    private void updateUI(GoogleSignInAccount account) {
+    private void goToDashboardGoogleSignin(GoogleSignInAccount account) {
         if(account == null){return;}
 
-        String googleEmail = account.getEmail();
+        String email = account.getEmail();
         String name = account.getGivenName();
         String ID = account.getId();
+
+        String welcomeMessage = "Welcome " + name;
+        emailField.setText(welcomeMessage);
+
+        Intent intent = new Intent(this, Dashboard.class);
+        intent.putExtra("email", email);
+        intent.putExtra("name", name);
+        intent.putExtra("ID", ID);
+
+        startActivity(intent);
     }
 }

@@ -10,13 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DartsApp">
         <activity android:name=".Dashboard" />
-        <activity android:name=".LoginScreen" />
         <activity android:name=".GameScreen" />
-        <activity android:name=".InitializingGame">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".InitializingGame"/>
+        <activity android:name=".LoginScreen" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
     </application>
 
