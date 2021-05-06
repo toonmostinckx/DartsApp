@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,12 +26,13 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     String name;
     String email;
     String ID;
-    String profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
 
         //Configure a listener on the signout button
         signOutButton = (Button) findViewById(R.id.SignoutButton);
@@ -45,10 +47,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         //Update greeting text according to the intent given
         TextView greeting = (TextView) findViewById(R.id.WelcomeUser);
         Bundle intent = getIntent().getExtras();
-        name = intent.get("name").toString();
-        email = intent.get("email").toString();
-        ID = intent.get("ID").toString();
-        profilePicture = intent.get("GooglePF").toString();
+        name = acct.getDisplayName();
+        email = acct.getEmail();
+        ID = acct.getId();
 
         String welcome = "Welcome " + name;
         greeting.setText(welcome);

@@ -3,6 +3,7 @@ package com.example.dartsapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -10,6 +11,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +31,8 @@ public class AccountScreen extends AppCompatActivity {
     TextView emailBox;
     TextView IDBox;
     ImageView profilePicture;
+
+    Button backButton;
     private Target mTarget;   //declare variable
 
     @Override
@@ -41,19 +45,34 @@ public class AccountScreen extends AppCompatActivity {
         IDBox = (TextView) findViewById(R.id.AccountScreen_IDBox);
         profilePicture = (ImageView) findViewById(R.id.AccountScreen_ProfilePicture);
 
+        backButton = (Button) findViewById(R.id.AccountScreenButton);
+
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if(acct != null) {
             String name = acct.getDisplayName();
             String email = acct.getEmail();
             String ID = acct.getId();
             Uri ProfilePictureURI = acct.getPhotoUrl();
-
-            assert ProfilePictureURI != null;
-            nameBox.setText(name);
-            emailBox.setText(email);
-            IDBox.setText(ID);
-
-            Picasso.get().load(ProfilePictureURI.toString()).into(profilePicture);
+            if(name != null){
+                String nameBoxText = "Name: " + name;
+                nameBox.setText(nameBoxText);
+            }
+            if(email != null){
+                String emailBoxText = "Email: " + email;
+                emailBox.setText(emailBoxText);
+            }
+            if(ID != null){
+                String IDBoxText = "Google ID: " + ID;
+                IDBox.setText(IDBoxText);
+            }
+            if(ProfilePictureURI != null){
+                Picasso.get().load(ProfilePictureURI.toString()).into(profilePicture);
+            }
         }
+    }
+
+    void toDashboard(){
+        Intent intent = new Intent(this, Dashboard.class);
+        startActivity(intent);
     }
 }

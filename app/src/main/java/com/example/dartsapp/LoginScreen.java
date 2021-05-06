@@ -3,11 +3,10 @@ package com.example.dartsapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -20,12 +19,9 @@ import com.google.android.gms.tasks.Task;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,6 +34,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private EditText passwordField;
     private RequestQueue requestQueue;
 
+    Button manualSigninButton;
+    Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +57,12 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(this);
 
+        //Setup login and register buttons
+        manualSigninButton = findViewById(R.id.LoginScreen_ManualSigninButton);
+        registerButton = findViewById(R.id.LoginScreen_RegisterAccountButton);
+        manualSigninButton.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
+
         //setup the account info text fields
         emailField = (EditText) findViewById(R.id.Manual_Signin_Email);
         passwordField = (EditText) findViewById(R.id.Manual_Signin_Password);
@@ -78,56 +82,58 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         if (v.getId() == R.id.sign_in_button) {
             googleSignIn();
         }
+        if(v.getId() == R.id.LoginScreen_ManualSigninButton){
+            manualSignIn();
+        }
+        if(v.getId() == R.id.LoginScreen_RegisterAccountButton){
+            goToRegisterScreen();
+        }
     }
 
-    public void manualSignIn(View v) {
+    private void goToRegisterScreen() {
+        Intent intent = new Intent(this, RegisterScreen.class);
+        startActivity(intent);
+    }
+
+    public void manualSignIn() {
         // check if the account is valid and registered
         String currentEmail = emailField.getText().toString();
         String currentPassWord = passwordField.getText().toString();
 
         //put passhash check in here
         Intent intent = new Intent(this, Dashboard.class);
+        intent.putExtra("SigninType", "Manual");
         intent.putExtra("email", currentEmail);
-
         startActivity(intent);
 
-        checkPassHash(v);
+        checkPassHash();
     }
 
-    private void checkPassHash( View v)
+    private void checkPassHash()
     {
         requestQueue = Volley.newRequestQueue( this );
         String requestURL = "https://studev.groept.be/api/a20sd111/checkPassHash";
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
-                        try {
-                            StringBuilder responseString = new StringBuilder();
-                            for( int i = 0; i < response.length(); i++ )
-                            {
-                                JSONObject curObject = response.getJSONObject( i );
-                                responseString.append(curObject.getString("email")).append(" : ").append(curObject.getString("passhash")).append("\n");
-                            }
-                            Log.d("Database", String.valueOf(responseString));
-                        }
-                        catch( JSONException e )
+                response -> {
+                    try {
+                        StringBuilder responseString = new StringBuilder();
+                        for( int i = 0; i < response.length(); i++ )
                         {
-                            Log.e( "Database", e.getMessage(), e );
+                            JSONObject curObject = response.getJSONObject( i );
+                            responseString.append(curObject.getString("email")).append(" : ").append(curObject.getString("passhash")).append("\n");
                         }
+                        Log.d("Database", String.valueOf(responseString));
+                    }
+                    catch( JSONException e )
+                    {
+                        Log.e( "Database", e.getMessage(), e );
                     }
                 },
 
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                    }
+                error -> {
+                    //handle error lmao
                 }
         );
 
@@ -169,22 +175,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private void goToDashboardGoogleSignin(GoogleSignInAccount account) {
         if(account == null){return;}
 
-        String email = account.getEmail();
-        String name = account.getGivenName();
-        String ID = account.getId();
-        Uri profilePicture = account.getPhotoUrl();
-
-        String welcomeMessage = "Welcome " + name;
-        emailField.setText(welcomeMessage);
+        emailField.setText(account.getEmail());
+        passwordField.setText(account.getId());
 
         Intent intent = new Intent(this, Dashboard.class);
-        intent.putExtra("email", email);
-        intent.putExtra("name", name);
-        intent.putExtra("ID", ID);
-        if(profilePicture != null){
-            String profilePictureString = profilePicture.toString();
-            intent.putExtra("GooglePF", profilePictureString);
-        }
+        intent.putExtra("SigninType", "Google");
         startActivity(intent);
     }
 }
