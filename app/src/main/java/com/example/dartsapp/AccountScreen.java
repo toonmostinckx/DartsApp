@@ -11,6 +11,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ import java.lang.annotation.Target;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class AccountScreen extends AppCompatActivity {
+public class AccountScreen extends AppCompatActivity implements View.OnClickListener{
     TextView nameBox;
     TextView emailBox;
     TextView IDBox;
@@ -40,12 +41,13 @@ public class AccountScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_screen);
 
-        nameBox = (TextView) findViewById(R.id.AccountScreen_NameBox);
-        emailBox = (TextView) findViewById(R.id.AccountScreen_EmailBox);
-        IDBox = (TextView) findViewById(R.id.AccountScreen_IDBox);
-        profilePicture = (ImageView) findViewById(R.id.AccountScreen_ProfilePicture);
+        nameBox = findViewById(R.id.AccountScreen_NameBox);
+        emailBox = findViewById(R.id.AccountScreen_EmailBox);
+        IDBox = findViewById(R.id.AccountScreen_IDBox);
+        profilePicture = findViewById(R.id.AccountScreen_ProfilePicture);
 
-        backButton = (Button) findViewById(R.id.AccountScreenButton);
+        backButton = findViewById(R.id.AccountScreen_BackButton);
+        backButton.setOnClickListener(this);
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if(acct != null) {
@@ -74,5 +76,12 @@ public class AccountScreen extends AppCompatActivity {
     void toDashboard(){
         Intent intent = new Intent(this, Dashboard.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.AccountScreen_BackButton){
+            toDashboard();
+        }
     }
 }

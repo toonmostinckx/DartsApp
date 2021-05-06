@@ -24,15 +24,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     Button newGameButton;
     Button accountButton;
     String name;
-    String email;
-    String ID;
+    String signinType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
 
         //Configure a listener on the signout button
         signOutButton = (Button) findViewById(R.id.SignoutButton);
@@ -44,13 +41,29 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         accountButton = (Button) findViewById(R.id.AccountScreenButton);
         accountButton.setOnClickListener(this);
 
-        //Update greeting text according to the intent given
-        TextView greeting = (TextView) findViewById(R.id.WelcomeUser);
+        //handle different signin options
         Bundle intent = getIntent().getExtras();
-        name = acct.getDisplayName();
-        email = acct.getEmail();
-        ID = acct.getId();
+        signinType = intent.get("SigninType").toString();
+        if(signinType.equals("Google")){
+            UpdateUIGoogle();
+        }else if(signinType.equals("Manual")){
+            UpdateUIManual(intent);
+        }
+    }
 
+    private void UpdateUIManual(Bundle intent) {
+        name = intent.get("Name").toString();
+
+        TextView greeting = findViewById(R.id.WelcomeUser);
+        String welcome = "Welcome " + name;
+        greeting.setText(welcome);
+    }
+
+    private void UpdateUIGoogle() {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        name = acct.getDisplayName();
+
+        TextView greeting = findViewById(R.id.WelcomeUser);
         String welcome = "Welcome " + name;
         greeting.setText(welcome);
 
@@ -59,6 +72,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    //handles clicks (Onclick method doet wat moeilijk op dit scherm)
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.SignoutButton) {
@@ -74,14 +88,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     //logs the google account out and returns to the starting screen
     private void signOut() {
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this, new OnCompleteListener<Void>
-                    () {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    goToLoginScreen();
-                }
-            });
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> goToLoginScreen());
     }
 
     private void goToLoginScreen(){
@@ -96,6 +103,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     private void goToAccountScreen(){
         Intent intent = new Intent(this, AccountScreen.class);
+        intent.putExtra("SigninType", signinType);
         startActivity(intent);
     }
 }
