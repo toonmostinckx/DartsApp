@@ -68,4 +68,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RegisterScreen_RepeatPassWordBox" />
+
+    <TextView
+        android:id="@+id/RegisterScreen_ErrorMessageBox"
+        android:layout_width="211dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="#FF0900"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterScreen_RepeatPassWordBox" />
 </androidx.constraintlayout.widget.ConstraintLayout>
