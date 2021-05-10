@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +22,9 @@ public class GameScreen extends AppCompatActivity {
     private TextView scorePlayer3;
     private TextView scorePlayer4;
     private ArrayList<TextView> pointsOfPlayers;
+    private Spinner points1;
+    private Spinner points2;
+    private Spinner points3;
    // private ArrayList<TextView> playersNames;
 
     @Override
@@ -28,13 +33,9 @@ public class GameScreen extends AppCompatActivity {
         setContentView(R.layout.activity_game_screen);
         pointsOfPlayers = new ArrayList<>();
         nameOfPlayer1 = (TextView) findViewById((R.id.namePlayer1));
-//        playersNames.add(nameOfPlayer1);
-        nameOfPlayer2 = (TextView) findViewById((R.id.namePlayer2));
-//        playersNames.add(nameOfPlayer2);
+        nameOfPlayer2 = (TextView) findViewById((R.id.namePlayer2));;
         nameOfPlayer3 = (TextView) findViewById((R.id.namePlayer3));
-//        playersNames.add(nameOfPlayer3);
-       nameOfPlayer4 = (TextView) findViewById((R.id.namePlayer4));
-//        //playersNames.add(nameOfPlayer4);
+        nameOfPlayer4 = (TextView) findViewById((R.id.namePlayer4));
         Bundle extras = getIntent().getExtras();
         setNameOfPlayer(nameOfPlayer1, extras, "nameOfPlayer1");
         setNameOfPlayer(nameOfPlayer2, extras, "nameOfPlayer2");
@@ -42,17 +43,31 @@ public class GameScreen extends AppCompatActivity {
         setNameOfPlayer(nameOfPlayer4, extras, "nameOfPlayer4");
 
         scorePlayer1 = (TextView) findViewById(R.id.scorePlayer1);
-        //setBeginStartingPointsOfPlayer(scorePlayer1, extras);
         scorePlayer2 = (TextView) findViewById(R.id.scorePlayer2);
         scorePlayer3 = (TextView) findViewById(R.id.scorePlayer3);
         scorePlayer4 = (TextView) findViewById(R.id.scorePlayer4);
-
         pointsOfPlayers.add(scorePlayer1);
         pointsOfPlayers.add(scorePlayer2);
         pointsOfPlayers.add(scorePlayer3);
         pointsOfPlayers.add(scorePlayer4);
         setNamesOfPlayersVisible(extras);
+
+        points1 = (Spinner) findViewById(R.id.points1);
+        points2 = (Spinner) findViewById(R.id.points2);
+        points3 = (Spinner) findViewById(R.id.points3);
+//        setSpinnerZeroToTwenty(points1);
+//        setSpinnerZeroToTwenty(points2);
+//        setSpinnerZeroToTwenty(points3);
     }
+
+//    private void setSpinnerZeroToTwenty(Spinner dropdown){
+//////        Integer[] items = new Integer[]{1,2,3,4};
+//////        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, items);
+////        final Integer[] zeroToTwenty = new Integer[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+////        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, zeroToTwenty);
+////        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+////        dropdown.setAdapter(adapter);
+////    }
 
     private void setNamesOfPlayersVisible(Bundle extras){
         for(int i = 0; i < extras.getInt("numberOfPlayers"); i++){

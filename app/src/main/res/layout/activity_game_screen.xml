@@ -53,9 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/scorePlayer1"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/namePlayer1"
-        app:layout_constraintTop_toTopOf="@+id/namePlayer1"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="@+id/namePlayer1" />
 
     <TextView
         android:id="@+id/scorePlayer2"
@@ -63,9 +63,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/scorePlayer2"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/namePlayer1"
-        app:layout_constraintTop_toTopOf="@+id/namePlayer2"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="@+id/namePlayer2" />
 
     <TextView
         android:id="@+id/scorePlayer3"
@@ -73,9 +73,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/scorePlayer3"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/namePlayer1"
-        app:layout_constraintTop_toTopOf="@+id/namePlayer3"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="@+id/namePlayer3" />
 
     <TextView
         android:id="@+id/scorePlayer4"
@@ -83,7 +83,66 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/scorePlayer4"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/namePlayer1"
-        app:layout_constraintTop_toTopOf="@+id/namePlayer4"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="@+id/namePlayer4" />
+
+    <TextView
+        android:id="@+id/worp1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/worp_1"
+        app:layout_constraintEnd_toStartOf="@+id/worp3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namePlayer4" />
+
+    <TextView
+        android:id="@+id/worp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/worp_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/worp3"
+        app:layout_constraintTop_toTopOf="@+id/worp3" />
+
+    <TextView
+        android:id="@+id/worp3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/worp_2"
+        app:layout_constraintEnd_toStartOf="@+id/worp2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/worp1"
+        app:layout_constraintTop_toTopOf="@+id/worp1" />
+
+    <Spinner
+        android:id="@+id/points1"
+        android:layout_width="83dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/zero_twenty"
+        app:layout_constraintStart_toStartOf="@+id/worp1"
+        app:layout_constraintTop_toBottomOf="@+id/worp1" />
+
+    <Spinner
+        android:id="@+id/points2"
+        android:layout_width="78dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/zero_twenty"
+        app:layout_constraintStart_toStartOf="@+id/worp3"
+        app:layout_constraintTop_toBottomOf="@+id/worp3" />
+
+    <Spinner
+        android:id="@+id/points3"
+        android:layout_width="83dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/zero_twenty"
+        app:layout_constraintStart_toStartOf="@+id/worp2"
+        app:layout_constraintTop_toBottomOf="@+id/worp2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
