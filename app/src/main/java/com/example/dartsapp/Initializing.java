@@ -94,7 +94,7 @@ public class Initializing extends AppCompatActivity {
     public void onBtnSubmit_Clicked(View caller){
         players = Integer.parseInt(numberOfPlayers.getText().toString());
         startingPoints = getStartingPoints();
-        Intent intent = new Intent(this, GameScreen.class);
+       Intent intent = new Intent(this, GameScreen.class);
         intent.putExtra("numberOfPlayers", getNumberOfPlayers());
         intent.putExtra("startingPoints", getStartingPoints());
         intent.putExtra("nameOfPlayer1", player1.getText().toString());
