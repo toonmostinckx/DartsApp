@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dartsapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DartsApp">
-        <activity android:name=".GameScreen"></activity>
-        <activity android:name=".Initializing">
+        <activity android:name=".RegisterScreen"></activity>
+        <activity android:name=".AccountScreen" />
+        <activity android:name=".Dashboard" />
+        <activity android:name=".GameScreen" />
+        <activity android:name=".InitializingGame" />
+        <activity android:name=".LoginScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

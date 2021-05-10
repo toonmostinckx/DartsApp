@@ -10,9 +10,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-
-public class Initializing extends AppCompatActivity {
+public class InitializingGame extends AppCompatActivity {
     private Button btnPlus;
     private Button btnMinus;
     private TextView numberOfPlayers;
@@ -29,7 +27,7 @@ public class Initializing extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.initializng_game);
+        setContentView(R.layout.activity_initializing_game);
         btnPlus = (Button) findViewById(R.id.btnPlus);
         btnMinus = (Button) findViewById(R.id.btnMinus);
         numberOfPlayers = (TextView) findViewById((R.id.numbersOfPlayers));
