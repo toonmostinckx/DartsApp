@@ -10,53 +10,68 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class GameScreen extends AppCompatActivity {
+
+    private TextView nameOfPlayer1;
+    private TextView nameOfPlayer2;
+    private TextView nameOfPlayer3;
+    private TextView nameOfPlayer4;
     private TextView scorePlayer1;
     private TextView scorePlayer2;
     private TextView scorePlayer3;
     private TextView scorePlayer4;
-
-    private TextView nameFirstPlayer;
-    private TextView nameSecondPlayer;
-    private TextView nameThirdPlayer;
-    private TextView nameFourthPlayer;
-    private Bundle extras;
-    private ArrayList<TextView> nameOfPlayers;
+    private ArrayList<TextView> pointsOfPlayers;
+   // private ArrayList<TextView> playersNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
-        nameOfPlayers = new ArrayList<>();
-        extras = getIntent().getExtras();
+        pointsOfPlayers = new ArrayList<>();
+        nameOfPlayer1 = (TextView) findViewById((R.id.namePlayer1));
+//        playersNames.add(nameOfPlayer1);
+        nameOfPlayer2 = (TextView) findViewById((R.id.namePlayer2));
+//        playersNames.add(nameOfPlayer2);
+        nameOfPlayer3 = (TextView) findViewById((R.id.namePlayer3));
+//        playersNames.add(nameOfPlayer3);
+       nameOfPlayer4 = (TextView) findViewById((R.id.namePlayer4));
+//        //playersNames.add(nameOfPlayer4);
+        Bundle extras = getIntent().getExtras();
+        setNameOfPlayer(nameOfPlayer1, extras, "nameOfPlayer1");
+        setNameOfPlayer(nameOfPlayer2, extras, "nameOfPlayer2");
+        setNameOfPlayer(nameOfPlayer3, extras, "nameOfPlayer3");
+        setNameOfPlayer(nameOfPlayer4, extras, "nameOfPlayer4");
+
         scorePlayer1 = (TextView) findViewById(R.id.scorePlayer1);
+        //setBeginStartingPointsOfPlayer(scorePlayer1, extras);
         scorePlayer2 = (TextView) findViewById(R.id.scorePlayer2);
         scorePlayer3 = (TextView) findViewById(R.id.scorePlayer3);
         scorePlayer4 = (TextView) findViewById(R.id.scorePlayer4);
-        setStartingPoints(extras);
 
-        nameFirstPlayer = (TextView) findViewById(R.id.nameFirstPlayer);
-        nameOfPlayers.add(nameFirstPlayer);
-        nameSecondPlayer = (TextView) findViewById(R.id.nameSecondPlayer);
-        nameOfPlayers.add(nameSecondPlayer);
-        nameThirdPlayer = (TextView) findViewById(R.id.nameThirdPlayer);
-        nameOfPlayers.add(nameThirdPlayer);
-        nameFourthPlayer = (TextView) findViewById(R.id.nameFourthPlayer);
-        nameOfPlayers.add(nameFourthPlayer);
-
-        setPlayersVisible();
+        pointsOfPlayers.add(scorePlayer1);
+        pointsOfPlayers.add(scorePlayer2);
+        pointsOfPlayers.add(scorePlayer3);
+        pointsOfPlayers.add(scorePlayer4);
+        setNamesOfPlayersVisible(extras);
     }
 
-    private void setStartingPoints(Bundle extras){
-        scorePlayer1.setText(extras.get("startingPoints").toString());
-        scorePlayer2.setText(extras.get("startingPoints").toString());
-        scorePlayer3.setText(extras.get("startingPoints").toString());
-        scorePlayer4.setText(extras.get("startingPoints").toString());
+    private void setNamesOfPlayersVisible(Bundle extras){
+        for(int i = 0; i < extras.getInt("numberOfPlayers"); i++){
+            pointsOfPlayers.get(i).setVisibility(View.VISIBLE);
+            setBeginStartingPointsOfPlayer(pointsOfPlayers.get(i), extras);
+        }
+    }
+    private void setBeginStartingPointsOfPlayer(TextView scoreOfPlayer, Bundle extras){
+        String startingPoints = extras.get("startingPoints").toString();
+        scoreOfPlayer.setText(startingPoints);
     }
 
-    private void setPlayersVisible(){
-        for(int i = 0; i < Integer.parseInt(extras.get("numberOfPlayers").toString()); i++){
-            TextView nameOfPlayer = nameOfPlayers.get(i);
-            nameOfPlayer.setVisibility(View.VISIBLE);
+    private void setNameOfPlayer(TextView nameOfPlayer, Bundle extras, String idForExtras) {
+        String name = extras.get(idForExtras).toString();
+        if (name != null) {
+            nameOfPlayer.setText(name);
+        }
+        else {
+            nameOfPlayer.setVisibility(View.GONE);
         }
     }
 }

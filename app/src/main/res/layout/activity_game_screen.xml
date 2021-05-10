@@ -4,90 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="gone"
+    android:visibility="visible"
     tools:context=".GameScreen">
 
     <TextView
-        android:id="@+id/nameFourthPlayer"
+        android:id="@+id/namePlayer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/player4"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameThirdPlayer" />
-
-    <TextView
-        android:id="@+id/nameFirstPlayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/player1"
-        android:visibility="gone"
+        android:text="@string/nameplayer1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/nameThirdPlayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/player3"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameSecondPlayer" />
-
-    <TextView
-        android:id="@+id/nameSecondPlayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/player2"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameFirstPlayer" />
-
-    <TextView
-        android:id="@+id/scorePlayer2"
+        android:id="@+id/namePlayer2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/_0"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/nameFirstPlayer"
-        app:layout_constraintTop_toTopOf="@+id/nameSecondPlayer" />
+        android:layout_marginTop="8dp"
+        android:text="@string/nameplayer2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namePlayer1" />
+
+    <TextView
+        android:id="@+id/namePlayer3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/nameplayer3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namePlayer2" />
+
+    <TextView
+        android:id="@+id/namePlayer4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/nameplayer4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namePlayer3" />
 
     <TextView
         android:id="@+id/scorePlayer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/_0"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/nameFirstPlayer"
-        app:layout_constraintTop_toTopOf="@+id/nameFirstPlayer" />
+        android:layout_marginStart="32dp"
+        android:text="@string/scorePlayer1"
+        app:layout_constraintStart_toEndOf="@+id/namePlayer1"
+        app:layout_constraintTop_toTopOf="@+id/namePlayer1"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/scorePlayer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/scorePlayer2"
+        app:layout_constraintStart_toEndOf="@+id/namePlayer1"
+        app:layout_constraintTop_toTopOf="@+id/namePlayer2"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/scorePlayer3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/_0"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/nameThirdPlayer"
-        app:layout_constraintTop_toTopOf="@+id/nameThirdPlayer" />
+        android:layout_marginStart="32dp"
+        android:text="@string/scorePlayer3"
+        app:layout_constraintStart_toEndOf="@+id/namePlayer1"
+        app:layout_constraintTop_toTopOf="@+id/namePlayer3"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/scorePlayer4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/_0"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/nameFourthPlayer"
-        app:layout_constraintTop_toTopOf="@+id/nameFourthPlayer" />
+        android:layout_marginStart="32dp"
+        android:text="@string/scorePlayer4"
+        app:layout_constraintStart_toEndOf="@+id/namePlayer1"
+        app:layout_constraintTop_toTopOf="@+id/namePlayer4"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

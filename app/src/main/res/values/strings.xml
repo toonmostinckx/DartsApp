@@ -24,11 +24,19 @@
     <string name="new_game">New Game</string>
     <string name="account">Account</string>
     <string name="profile_picture_of_the_user">Profile Picture of the user</string>
-    <string name="textview">TextView</string>
     <string name="id">ID</string>
     <string name="button">Button</string>
     <string name="full_name">Full Name</string>
     <string name="repeat_password">Repeat Password</string>
     <string name="register">Register</string>
     <string name="register_account">Register Account</string>
+    <string name="textview">TextView</string>
+    <string name="nameplayer1">namePlayer1</string>
+    <string name="nameplayer2">namePlayer2</string>
+    <string name="nameplayer3">namePlayer3</string>
+    <string name="nameplayer4">namePlayer4</string>
+    <string name="scorePlayer1">scorePlayer1</string>
+    <string name="scorePlayer2">scorePLayer2</string>
+    <string name="scorePlayer3">scorePlayer3</string>
+    <string name="scorePlayer4">scorePlayer4</string>
 </resources>
