@@ -32,17 +32,29 @@ public class GameScreen extends AppCompatActivity {
     private Button throwCompleted;
     private int player = 0;
     private int numberOfPlayers;
+    private ArrayList<String> ranking;
+    private ArrayList<TextView> playersNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
+
         pointsOfPlayers = new ArrayList<>();
+        ranking = new ArrayList<>();
+        playersNames = new ArrayList<>();
+
         nameOfPlayer1 = (TextView) findViewById((R.id.namePlayer1));
         nameOfPlayer2 = (TextView) findViewById((R.id.namePlayer2));;
         nameOfPlayer3 = (TextView) findViewById((R.id.namePlayer3));
         nameOfPlayer4 = (TextView) findViewById((R.id.namePlayer4));
+        playersNames.add(nameOfPlayer1);
+        playersNames.add(nameOfPlayer2);
+        playersNames.add(nameOfPlayer3);
+        playersNames.add(nameOfPlayer4);
+
         Bundle extras = getIntent().getExtras();
+
         setNameOfPlayer(nameOfPlayer1, extras, "nameOfPlayer1");
         setNameOfPlayer(nameOfPlayer2, extras, "nameOfPlayer2");
         setNameOfPlayer(nameOfPlayer3, extras, "nameOfPlayer3");
@@ -71,6 +83,18 @@ public class GameScreen extends AppCompatActivity {
         numberOfPlayers = getNumberOfPlayers(extras);
     }
 
+    private void addPlayerToRanking(TextView player){
+        boolean playerInList = false;
+        for(String playerName: ranking){
+            if(playerName == player.getText().toString()){
+                playerInList = true;
+            }
+        }
+        if(playerInList == false){
+            ranking.add(player.getText().toString());
+        }
+    }
+
     private int getNumberOfPlayers(Bundle extras){
         return extras.getInt("numberOfPlayers");
     }
@@ -96,7 +120,16 @@ public class GameScreen extends AppCompatActivity {
         int pointsBeforeThrow = Integer.parseInt(scorePlayer.getText().toString());
         int pointsOfThrows = getPointsOfThrow();
         int pointsAfterThrow = pointsBeforeThrow - pointsOfThrows;
-        return pointsAfterThrow;
+        if(pointsAfterThrow < 0){
+            return pointsBeforeThrow;
+        }
+        if(pointsAfterThrow == 0){
+            addPlayerToRanking(playersNames.get(player));
+            return 0;
+        }
+        else {
+            return pointsAfterThrow;
+        }
     }
 
     private int getPointsOfThrow(){
