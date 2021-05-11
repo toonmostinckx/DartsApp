@@ -23,6 +23,7 @@ public class InitializingGame extends AppCompatActivity {
     private EditText player2;
     private EditText player3;
     private EditText player4;
+    private Button throwCompleted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

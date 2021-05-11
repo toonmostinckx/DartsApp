@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,7 +26,12 @@ public class GameScreen extends AppCompatActivity {
     private Spinner points1;
     private Spinner points2;
     private Spinner points3;
-   // private ArrayList<TextView> playersNames;
+    private Spinner multiplyFactor1;
+    private Spinner multiplyFactor2;
+    private Spinner multiplyFactor3;
+    private Button throwCompleted;
+    private int player = 0;
+    private int numberOfPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +61,50 @@ public class GameScreen extends AppCompatActivity {
         points1 = (Spinner) findViewById(R.id.points1);
         points2 = (Spinner) findViewById(R.id.points2);
         points3 = (Spinner) findViewById(R.id.points3);
-//        setSpinnerZeroToTwenty(points1);
-//        setSpinnerZeroToTwenty(points2);
-//        setSpinnerZeroToTwenty(points3);
+
+        multiplyFactor1 = (Spinner) findViewById((R.id.multiplyFactor1));
+        multiplyFactor2 = (Spinner) findViewById(R.id.multiplyFactor2);
+        multiplyFactor3 = (Spinner) findViewById(R.id.multiplyFactor3);
+
+        throwCompleted = (Button) findViewById(R.id.btnThrowCompleted);
+
+        numberOfPlayers = getNumberOfPlayers(extras);
     }
 
-//    private void setSpinnerZeroToTwenty(Spinner dropdown){
-//////        Integer[] items = new Integer[]{1,2,3,4};
-//////        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, items);
-////        final Integer[] zeroToTwenty = new Integer[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-////        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, zeroToTwenty);
-////        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-////        dropdown.setAdapter(adapter);
-////    }
+    private int getNumberOfPlayers(Bundle extras){
+        return extras.getInt("numberOfPlayers");
+    }
+
+    public void clickedOnBtnThrowCompleted(View caller){
+        if(player >= numberOfPlayers){
+            player = 0;
+            setPoints(pointsOfPlayers.get(player));
+            player++;
+        }
+        else{
+            setPoints(pointsOfPlayers.get(player));
+            player++;
+        }
+    }
+
+    private void setPoints(TextView scorePlayer){
+        Integer score = calculatePoints(scorePlayer);
+        scorePlayer.setText(score.toString());
+    }
+
+    private int calculatePoints(TextView scorePlayer){
+        int pointsBeforeThrow = Integer.parseInt(scorePlayer.getText().toString());
+        int pointsOfThrows = getPointsOfThrow();
+        int pointsAfterThrow = pointsBeforeThrow - pointsOfThrows;
+        return pointsAfterThrow;
+    }
+
+    private int getPointsOfThrow(){
+        int pointsThrow1 = Integer.parseInt(points1.getSelectedItem().toString()) * (multiplyFactor1.getSelectedItemPosition() + 1);
+        int pointsThrow2 = Integer.parseInt(points2.getSelectedItem().toString()) * (multiplyFactor2.getSelectedItemPosition() + 1);
+        int pointsThrow3 = Integer.parseInt(points3.getSelectedItem().toString()) * (multiplyFactor3.getSelectedItemPosition() + 1);
+        return (pointsThrow1 + pointsThrow2 +pointsThrow3);
+    }
 
     private void setNamesOfPlayersVisible(Bundle extras){
         for(int i = 0; i < extras.getInt("numberOfPlayers"); i++){

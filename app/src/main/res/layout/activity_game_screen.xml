@@ -7,6 +7,15 @@
     android:visibility="visible"
     tools:context=".GameScreen">
 
+    <Spinner
+        android:id="@+id/multiplyFactor3"
+        android:layout_width="83dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/multiply_factor"
+        app:layout_constraintStart_toStartOf="@+id/points3"
+        app:layout_constraintTop_toBottomOf="@+id/points3" />
+
     <TextView
         android:id="@+id/namePlayer1"
         android:layout_width="wrap_content"
@@ -120,8 +129,8 @@
 
     <Spinner
         android:id="@+id/points1"
-        android:layout_width="83dp"
-        android:layout_height="72dp"
+        android:layout_width="104dp"
+        android:layout_height="69dp"
         android:layout_marginTop="8dp"
         android:entries="@array/zero_twenty"
         app:layout_constraintStart_toStartOf="@+id/worp1"
@@ -129,8 +138,8 @@
 
     <Spinner
         android:id="@+id/points2"
-        android:layout_width="78dp"
-        android:layout_height="71dp"
+        android:layout_width="107dp"
+        android:layout_height="66dp"
         android:layout_marginTop="8dp"
         android:entries="@array/zero_twenty"
         app:layout_constraintStart_toStartOf="@+id/worp3"
@@ -138,11 +147,41 @@
 
     <Spinner
         android:id="@+id/points3"
-        android:layout_width="83dp"
-        android:layout_height="69dp"
+        android:layout_width="108dp"
+        android:layout_height="68dp"
         android:layout_marginTop="8dp"
         android:entries="@array/zero_twenty"
         app:layout_constraintStart_toStartOf="@+id/worp2"
         app:layout_constraintTop_toBottomOf="@+id/worp2" />
+
+    <Spinner
+        android:id="@+id/multiplyFactor2"
+        android:layout_width="83dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/multiply_factor"
+        app:layout_constraintStart_toStartOf="@+id/points2"
+        app:layout_constraintTop_toBottomOf="@+id/points2" />
+
+    <Spinner
+        android:id="@+id/multiplyFactor1"
+        android:layout_width="83dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/multiply_factor"
+        app:layout_constraintStart_toStartOf="@+id/points1"
+        app:layout_constraintTop_toBottomOf="@+id/points1" />
+
+    <Button
+        android:id="@+id/btnThrowCompleted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="clickedOnBtnThrowCompleted"
+        android:text="@string/worp_voltooid"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
