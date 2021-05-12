@@ -2,6 +2,7 @@ package com.example.dartsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -108,7 +109,7 @@ public class GameScreen extends AppCompatActivity {
         playersNames.get(player).setBackgroundColor(0x00000000);
     }
 
-    private void setBackGroundColorForFirstPlayer(int playerWhoNeedsToThrow){
+    private void setBackGroundColorForNextPlayer(int playerWhoNeedsToThrow){
         if(playerWhoNeedsToThrow >= numberOfPlayers){
             setGreenBackGroundToPlayersName(0);
         }
@@ -129,7 +130,7 @@ public class GameScreen extends AppCompatActivity {
             deleteBackGroundColor(player);
             setPoints(pointsOfPlayers.get(player));
             player++;
-            setBackGroundColorForFirstPlayer(player);
+            setBackGroundColorForNextPlayer(player);
         }
     }
 
@@ -147,6 +148,7 @@ public class GameScreen extends AppCompatActivity {
         }
         if(pointsAfterThrow == 0){
             addPlayerToRanking(playersNames.get(player));
+            checkForTheEndOfTheGame();
             return 0;
         }
         else {
@@ -179,6 +181,15 @@ public class GameScreen extends AppCompatActivity {
         }
         else {
             nameOfPlayer.setVisibility(View.GONE);
+        }
+    }
+
+    private void checkForTheEndOfTheGame(){
+        if(ranking.size() == numberOfPlayers - 1){
+            addPlayerToRanking(playersNames.get(numberOfPlayers - 1));
+            Intent intentGameScreen = new Intent(this, Results.class);
+            intentGameScreen.putExtra("ranking", ranking);
+            startActivity(intentGameScreen);
         }
     }
 }

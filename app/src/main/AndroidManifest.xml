@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DartsApp">
-        <activity android:name=".RegisterScreen"></activity>
+        <activity android:name=".Results"></activity>
+        <activity android:name=".RegisterScreen" />
         <activity android:name=".AccountScreen" />
         <activity android:name=".Dashboard" />
         <activity android:name=".GameScreen" />
