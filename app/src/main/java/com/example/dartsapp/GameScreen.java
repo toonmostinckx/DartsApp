@@ -45,6 +45,7 @@ public class GameScreen extends AppCompatActivity {
         playersNames = new ArrayList<>();
 
         nameOfPlayer1 = (TextView) findViewById((R.id.namePlayer1));
+        nameOfPlayer1.setBackgroundColor(0xFF00FF00);
         nameOfPlayer2 = (TextView) findViewById((R.id.namePlayer2));;
         nameOfPlayer3 = (TextView) findViewById((R.id.namePlayer3));
         nameOfPlayer4 = (TextView) findViewById((R.id.namePlayer4));
@@ -99,15 +100,36 @@ public class GameScreen extends AppCompatActivity {
         return extras.getInt("numberOfPlayers");
     }
 
+    private void setGreenBackGroundToPlayersName(int playerWhoNeedsToThrow){
+        playersNames.get(playerWhoNeedsToThrow).setBackgroundColor(0xFF00FF00);
+    }
+
+    private void deleteBackGroundColor(int playerWhoHasThrown){
+        playersNames.get(player).setBackgroundColor(0x00000000);
+    }
+
+    private void setBackGroundColorForFirstPlayer(int playerWhoNeedsToThrow){
+        if(playerWhoNeedsToThrow >= numberOfPlayers){
+            setGreenBackGroundToPlayersName(0);
+        }
+        else{
+            setGreenBackGroundToPlayersName(playerWhoNeedsToThrow);
+        }
+    }
+
     public void clickedOnBtnThrowCompleted(View caller){
         if(player >= numberOfPlayers){
             player = 0;
+            deleteBackGroundColor(player);
             setPoints(pointsOfPlayers.get(player));
             player++;
+            setGreenBackGroundToPlayersName(player);
         }
         else{
+            deleteBackGroundColor(player);
             setPoints(pointsOfPlayers.get(player));
             player++;
+            setBackGroundColorForFirstPlayer(player);
         }
     }
 
