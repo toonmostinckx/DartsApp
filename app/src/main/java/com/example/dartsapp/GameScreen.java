@@ -33,8 +33,10 @@ public class GameScreen extends AppCompatActivity {
     private Button throwCompleted;
     private int player = 0;
     private int numberOfPlayers;
+    private int numberOfThrows= 0;
     private ArrayList<String> ranking;
     private ArrayList<TextView> playersNames;
+    private ArrayList<Integer> numberOfThrowsOfAllPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class GameScreen extends AppCompatActivity {
         pointsOfPlayers = new ArrayList<>();
         ranking = new ArrayList<>();
         playersNames = new ArrayList<>();
+        numberOfThrowsOfAllPlayers = new ArrayList<>();
 
         nameOfPlayer1 = (TextView) findViewById((R.id.namePlayer1));
         nameOfPlayer1.setBackgroundColor(0xFF00FF00);
@@ -85,6 +88,9 @@ public class GameScreen extends AppCompatActivity {
         numberOfPlayers = getNumberOfPlayers(extras);
     }
 
+    private void addNumberOfThrowsOfAllPlayers(int numberOfThrows){
+        numberOfThrowsOfAllPlayers.add(numberOfThrows);
+    }
     private void addPlayerToRanking(TextView player){
         boolean playerInList = false;
         for(String playerName: ranking){
@@ -94,6 +100,7 @@ public class GameScreen extends AppCompatActivity {
         }
         if(playerInList == false){
             ranking.add(player.getText().toString());
+            addNumberOfThrowsOfAllPlayers(numberOfThrows);
         }
     }
 
@@ -119,6 +126,7 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void clickedOnBtnThrowCompleted(View caller){
+        numberOfThrows++;
         if(player >= numberOfPlayers){
             player = 0;
             deleteBackGroundColor(player);
@@ -189,6 +197,7 @@ public class GameScreen extends AppCompatActivity {
             addPlayerToRanking(playersNames.get(numberOfPlayers - 1));
             Intent intentGameScreen = new Intent(this, Results.class);
             intentGameScreen.putExtra("ranking", ranking);
+            intentGameScreen.putExtra("numberOfThrowsOfAllPlayers", numberOfThrowsOfAllPlayers);
             startActivity(intentGameScreen);
         }
     }

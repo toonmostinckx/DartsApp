@@ -6,4 +6,170 @@
     android:layout_height="match_parent"
     tools:context=".Results">
 
+    <TextView
+        android:id="@+id/endOfTheGame"
+        android:layout_width="220dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/end_of_the_game"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/results"
+        android:layout_width="49dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/results"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endOfTheGame" />
+
+    <TextView
+        android:id="@+id/fourthPlayerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/fourthplayername"
+        app:layout_constraintStart_toStartOf="@+id/thirdPlayerName"
+        app:layout_constraintTop_toBottomOf="@+id/thirdPlayerName" />
+
+    <TextView
+        android:id="@+id/thirdPlayerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/thirdplayername"
+        app:layout_constraintStart_toStartOf="@+id/firstPlayerName"
+        app:layout_constraintTop_toBottomOf="@+id/secondPlayerName" />
+
+    <TextView
+        android:id="@+id/secondPlayerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/secondplayername"
+        app:layout_constraintStart_toStartOf="@+id/firstPlayerName"
+        app:layout_constraintTop_toBottomOf="@+id/firstPlayerName" />
+
+    <TextView
+        android:id="@+id/firstPlayerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/firstplayername"
+        app:layout_constraintStart_toStartOf="@+id/ranking"
+        app:layout_constraintTop_toBottomOf="@+id/results" />
+
+    <TextView
+        android:id="@+id/ranking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/ranking"
+        app:layout_constraintBottom_toTopOf="@+id/firstPlayerName"
+        app:layout_constraintEnd_toStartOf="@+id/numberOfThrows"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/numberOfThrows"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/number_of_throws"
+        app:layout_constraintEnd_toStartOf="@+id/highestScoreInOneThrow"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ranking"
+        app:layout_constraintTop_toTopOf="@+id/ranking" />
+
+    <TextView
+        android:id="@+id/highestScoreInOneThrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/highest_score_in_one_throw"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/numberOfThrows"
+        app:layout_constraintTop_toTopOf="@+id/ranking" />
+
+    <TextView
+        android:id="@+id/numberOfThrowsPlayer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/thr0ws_player_1"
+        app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
+        app:layout_constraintTop_toBottomOf="@+id/numberOfThrows" />
+
+    <TextView
+        android:id="@+id/numberOfThrowsPlayer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/throws_player_2"
+        app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
+        app:layout_constraintTop_toBottomOf="@+id/numberOfThrowsPlayer1" />
+
+    <TextView
+        android:id="@+id/numberOfThrowsPlayer3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/throws_player_3"
+        app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
+        app:layout_constraintTop_toBottomOf="@+id/numberOfThrowsPlayer2" />
+
+    <TextView
+        android:id="@+id/numberOfThrowsPlayer4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/throws_player_4"
+        app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
+        app:layout_constraintTop_toBottomOf="@+id/numberOfThrowsPlayer3" />
+
+    <TextView
+        android:id="@+id/highestScorePlayer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/highestscoreplayer1"
+        app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
+        app:layout_constraintTop_toBottomOf="@+id/highestScoreInOneThrow" />
+
+    <TextView
+        android:id="@+id/highestScorePlayer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/highestscoreplayer1"
+        app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
+        app:layout_constraintTop_toBottomOf="@+id/highestScorePlayer1" />
+
+    <TextView
+        android:id="@+id/highestScorePlayer3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/highestscoreplayer1"
+        app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
+        app:layout_constraintTop_toBottomOf="@+id/highestScorePlayer2" />
+
+    <TextView
+        android:id="@+id/highestScorePlayer4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/highestscoreplayer1"
+        app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
+        app:layout_constraintTop_toBottomOf="@+id/highestScorePlayer3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
