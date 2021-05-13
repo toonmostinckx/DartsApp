@@ -19,11 +19,14 @@ public class GameScreen extends AppCompatActivity {
     private TextView nameOfPlayer2;
     private TextView nameOfPlayer3;
     private TextView nameOfPlayer4;
+    private ArrayList<TextView> playersNames;
+
     private TextView scorePlayer1;
     private TextView scorePlayer2;
     private TextView scorePlayer3;
     private TextView scorePlayer4;
     private ArrayList<TextView> pointsOfPlayers;
+
     private Spinner points1;
     private Spinner points2;
     private Spinner points3;
@@ -35,7 +38,7 @@ public class GameScreen extends AppCompatActivity {
     private int numberOfPlayers;
     private int numberOfThrows= 0;
     private ArrayList<String> ranking;
-    private ArrayList<TextView> playersNames;
+
     private ArrayList<Integer> numberOfThrowsOfAllPlayers;
 
     @Override
@@ -192,9 +195,27 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
+    private void addLastPlayerInRanking(){
+        for(TextView playersNameView: playersNames){
+            if(playerInRanking(playersNameView.getText().toString()) == false){
+                ranking.add(playersNameView.getText().toString());
+            }
+        }
+    }
+
+    private boolean playerInRanking(String playersNameVieW){
+        boolean playerInRanking = false;
+        for(String nameInRanking: ranking){
+            if(nameInRanking == playersNameVieW){
+                playerInRanking = true;
+            }
+        }
+        return playerInRanking;
+    }
+
     private void checkForTheEndOfTheGame(){
         if(ranking.size() == numberOfPlayers - 1){
-            addPlayerToRanking(playersNames.get(numberOfPlayers - 1));
+            addLastPlayerInRanking();
             Intent intentGameScreen = new Intent(this, Results.class);
             intentGameScreen.putExtra("ranking", ranking);
             intentGameScreen.putExtra("numberOfThrowsOfAllPlayers", numberOfThrowsOfAllPlayers);

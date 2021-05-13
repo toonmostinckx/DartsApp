@@ -59,6 +59,7 @@
     <string name="firstplayername">firstPlayerName</string>
 
     <string-array name="zero_twenty">
+        <item> 301</item>
         <item> 0</item>
         <item> 1</item>
         <item> 2</item>
