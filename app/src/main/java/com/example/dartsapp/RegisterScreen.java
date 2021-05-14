@@ -10,14 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.apache.commons.codec.binary.Hex;
-
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.util.Random;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener{
     
@@ -47,14 +43,15 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.RegisterScreen_RegisterButton) {
-            registerAccount();
+            registerButtonPressed();
         }
     }
     
-    public void registerAccount(){
+    public void registerButtonPressed(){
         errorMessageBox.setText("");
         //check if email already has account linked
-        if(checkExistingEmail(emailBox.getText().toString())){
+        /*
+        if(checkExistingEmail()){
             String error = "Email already registered to a user";
             errorMessageBox.setText(error);
 
@@ -63,6 +60,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             repeatPasswordBox.setText("");
             return;
         }
+         */
         
         //check if passwords match
         if(!passwordBox.getText().toString().equals(repeatPasswordBox.getText().toString())){
@@ -75,21 +73,13 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        //Hash the password
-        String hashedPassword;
-        try {
-            hashedPassword = hashPassword();
-        }catch (Exception e){
-            Log.e("TAG", "hashingError", e);
-            return;
-        }
-
-        //now register in the database
-        //morgen zal dat wel duidelijk worden
-
-        //go to dashboard with this information
         String name = nameBox.getText().toString();
         String email = emailBox.getText().toString();
+        String passWord = passwordBox.getText().toString();
+
+        //now register in the database
+        User tmp = new User(name, email, passWord);
+        registerUser(tmp);
 
         Intent intent = new Intent(this, Dashboard.class);
         intent.putExtra("SigninType", "Manual");
@@ -98,43 +88,46 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         startActivity(intent);
     }
 
-    private String hashPassword() throws NoSuchAlgorithmException, InvalidKeySpecException {
-        //generate Salt
-        byte[] salt = generateSalt();
+    /* Ik ben niet zeker hoe ik dit best check? Asynchroon werken is nie simpel voor dit soort dingen
+    private boolean checkExistingEmail() {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        boolean existing = true;
 
-        //generate bytearray of the hashed password
-        KeySpec spec = new PBEKeySpec(passwordBox.getText().toString().toCharArray(), salt, 65536, 128);
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] hash = factory.generateSecret(spec).getEncoded();
+        String requestURL = "https://studev.groept.be/api/a20sd111/checkExistingEmail/" + emailBox.getText().toString();
 
-        //return string from bytearray using Apache commontools Hex
-        return Hex.encodeHexString(hash);
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                response -> {
+                    try {
+                        JSONObject cur = response.getJSONObject(0);
+                        if(cur.get("email").equals(emailBox.getText().toString())){
+                            existing = false;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                },
+                error -> {
+                    Log.e("Register", "Register user failed");
+                }
+        );
+
+        requestQueue.add(submitRequest);
     }
+    */
 
+    public void registerUser(User user){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-    private byte[] generateSalt() {
-        //generates seed for PRNG from the users email
-        long seed = generateLongFromString(emailBox.getText().toString());
-        Random randomGen = new Random(seed);
+        String requestURL = "https://studev.groept.be/api/a20sd111/registerUser/" + user.getName() + "/" + user.getEmail() + "/" + user.getPassHash();
 
-        //fills salt array with random bytes
-        byte[] salt = new byte[16];
-        randomGen.nextBytes(salt);
-        return salt;
-    }
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
-    private long generateLongFromString(String givenString) {
-        //generates long from the users emails ASCII codes
-        char[] chararray = givenString.toCharArray();
-        long seed = 0;
-        for (char c : chararray) {
-            seed += (int) c;
-        }
-        return seed;
-    }
+                response -> {},
+                error -> Log.e("Register", "Register user failed")
+        );
 
-    private boolean checkExistingEmail(String text) {
-        //just check the email
-        return false;
+        requestQueue.add(submitRequest);
     }
 }

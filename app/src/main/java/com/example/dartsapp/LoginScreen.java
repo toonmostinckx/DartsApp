@@ -112,7 +112,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private void checkPassHash()
     {
         requestQueue = Volley.newRequestQueue( this );
-        String requestURL = "https://studev.groept.be/api/a20sd111/checkPassHash";
+        String currentEmail = emailField.getText().toString();
+        String currentPassWord = passwordField.getText().toString();
+
+        String requestURL = "https://studev.groept.be/api/a20sd111/checkLogin";
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
