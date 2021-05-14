@@ -101,43 +101,32 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         String currentPassWord = passwordField.getText().toString();
 
         //put passhash check in here
-        Intent intent = new Intent(this, Dashboard.class);
-        intent.putExtra("SigninType", "Manual");
-        intent.putExtra("email", currentEmail);
-        startActivity(intent);
-
-        checkPassHash();
+        User tmp = new User(currentEmail, currentPassWord);
+        checkPassHash(tmp);
     }
 
-    private void checkPassHash()
+    private void checkPassHash(User user)
     {
         requestQueue = Volley.newRequestQueue( this );
-        String currentEmail = emailField.getText().toString();
-        String currentPassWord = passwordField.getText().toString();
 
-        String requestURL = "https://studev.groept.be/api/a20sd111/checkLogin";
+        String requestURL = "https://studev.groept.be/api/a20sd111/checkLogin/" + user.getEmail() + "/" + user.getPassHash();
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
                 response -> {
                     try {
-                        StringBuilder responseString = new StringBuilder();
-                        for( int i = 0; i < response.length(); i++ )
-                        {
-                            JSONObject curObject = response.getJSONObject( i );
-                            responseString.append(curObject.getString("email")).append(" : ").append(curObject.getString("passhash")).append("\n");
+                        JSONObject responseJSON = response.getJSONObject(0);
+                        if(responseJSON.get("ID") != null){
+                            user.setID(responseJSON.get("ID").toString());
+                            goToDashboardManual(user);
                         }
-                        Log.d("Database", String.valueOf(responseString));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    catch( JSONException e )
-                    {
-                        Log.e( "Database", e.getMessage(), e );
-                    }
-                },
 
-                error -> {
-                    //handle error lmao
                 }
+                ,
+                error -> {}
         );
 
         requestQueue.add(submitRequest);
@@ -183,6 +172,13 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         Intent intent = new Intent(this, Dashboard.class);
         intent.putExtra("SigninType", "Google");
+        startActivity(intent);
+    }
+
+    private void goToDashboardManual(User user) {
+        Intent intent = new Intent(this, Dashboard.class);
+        intent.putExtra("SigninType", "Manual");
+        intent.putExtra("ID", user.getID());
         startActivity(intent);
     }
 }

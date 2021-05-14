@@ -16,10 +16,21 @@ public class User {
     private String email;
     private String password;
     private String passHash;
-    private int ID;
+    private String ID;
 
     public User(String name, String email, String password){
         this.name = name;
+        this.email = email;
+        this.password = password;
+
+        try {
+            this.passHash = this.hashPassword();
+        }catch(Exception e){
+            Log.e("Hashing", "Hashing Error", e);
+        }
+    }
+
+    public User(String email, String password){
         this.email = email;
         this.password = password;
 
@@ -36,8 +47,12 @@ public class User {
         return name;
     }
 
-    public int getID() {
+    public String getID() {
         return ID;
+    }
+
+    public void setID(String ID){
+        this.ID = ID;
     }
 
     public String getEmail(){
