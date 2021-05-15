@@ -22,7 +22,7 @@ public class Results extends AppCompatActivity {
     private TextView numberOfThrowsPlayer3;
     private TextView numberOfThrowsPlayer4;
     private ArrayList<TextView> numberOfThrowsTextView;
-    private ArrayList<Integer> numberOfThrowsString;
+    private ArrayList<Integer> numberOfThrowsInteger;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +54,18 @@ public class Results extends AppCompatActivity {
         numberOfThrowsTextView.add(numberOfThrowsPlayer2);
         numberOfThrowsTextView.add(numberOfThrowsPlayer3);
         numberOfThrowsTextView.add(numberOfThrowsPlayer4);
-        numberOfThrowsString = extras.getIntegerArrayList("numberOfThrowsOfAllPlayers");
+        numberOfThrowsInteger = extras.getIntegerArrayList("numberOfThrowsOfAllPlayers");
 
-        //setTextViewsVisible(numberOfThrowsTextView, numberOfThrowsString);
+        setTextViewsVisible(numberOfThrowsTextView, changeArrayListIntegerToArrayListString(numberOfThrowsInteger));
     }
 
+    private ArrayList<String> changeArrayListIntegerToArrayListString(ArrayList<Integer> arrayListInteger){
+        ArrayList<String> arrayListString = new ArrayList<>();
+        for(Integer i: arrayListInteger){
+            arrayListString.add(i.toString());
+        }
+        return arrayListString;
+    }
     
     private void setTextViewsVisible(ArrayList<TextView> textViewArrayList, ArrayList<String> listWithText){
         for(int i = 0; i < numberOfPlayers; i++){

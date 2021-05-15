@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/throws_player_1"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
         app:layout_constraintTop_toBottomOf="@+id/numberOfThrows" />
 
@@ -119,7 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/throws_player_2"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
         app:layout_constraintTop_toBottomOf="@+id/numberOfThrowsPlayer1" />
 
@@ -129,7 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/throws_player_3"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
         app:layout_constraintTop_toBottomOf="@+id/numberOfThrowsPlayer2" />
 
@@ -139,7 +139,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/throws_player_4"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
         app:layout_constraintTop_toBottomOf="@+id/numberOfThrowsPlayer3" />
 

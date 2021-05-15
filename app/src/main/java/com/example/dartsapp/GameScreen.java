@@ -36,7 +36,7 @@ public class GameScreen extends AppCompatActivity {
     private Button throwCompleted;
     private int player = 0;
     private int numberOfPlayers;
-    private int numberOfThrows = 0;
+    private int numberOfTimesPushedOnThrowBtn = 0;
     private ArrayList<String> ranking;
 
     private ArrayList<Integer> numberOfThrowsOfAllPlayers;
@@ -94,6 +94,7 @@ public class GameScreen extends AppCompatActivity {
     private void addNumberOfThrowsOfAllPlayers(int numberOfThrows){
         numberOfThrowsOfAllPlayers.add(numberOfThrows);
     }
+
     private void addPlayerToRanking(TextView player){
         boolean playerInList = false;
         for(String playerName: ranking){
@@ -103,7 +104,16 @@ public class GameScreen extends AppCompatActivity {
         }
         if(playerInList == false){
             ranking.add(player.getText().toString());
-            addNumberOfThrowsOfAllPlayers(numberOfThrows);
+            addNumberOfThrowsOfAllPlayers(calculateNumberOfThrow(numberOfTimesPushedOnThrowBtn));
+        }
+    }
+
+    private int calculateNumberOfThrow(int timePushedBtnThrow){
+        if(timePushedBtnThrow / 3 == 0){
+            return 1;
+        }
+        else{
+            return timePushedBtnThrow / 3;
         }
     }
 
@@ -129,7 +139,7 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void clickedOnBtnThrowCompleted(View caller){
-        numberOfThrows++;
+        numberOfTimesPushedOnThrowBtn++;
         if(player >= numberOfPlayers){
             player = 0;
             deleteBackGroundColor(player);
@@ -201,6 +211,7 @@ public class GameScreen extends AppCompatActivity {
             playerInRanking = playerInRanking(playersNameView.getText().toString());
             if(playerInRanking == false){
                 ranking.add(playersNameView.getText().toString());
+                addNumberOfThrowsOfAllPlayers(-1); //add number -1 to last player who didnt get to zero points
             }
         }
     }
