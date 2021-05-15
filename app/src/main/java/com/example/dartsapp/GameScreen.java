@@ -36,7 +36,7 @@ public class GameScreen extends AppCompatActivity {
     private Button throwCompleted;
     private int player = 0;
     private int numberOfPlayers;
-    private int numberOfThrows= 0;
+    private int numberOfThrows = 0;
     private ArrayList<String> ranking;
 
     private ArrayList<Integer> numberOfThrowsOfAllPlayers;
@@ -196,8 +196,10 @@ public class GameScreen extends AppCompatActivity {
     }
 
     private void addLastPlayerInRanking(){
+        boolean playerInRanking;
         for(TextView playersNameView: playersNames){
-            if(playerInRanking(playersNameView.getText().toString()) == false){
+            playerInRanking = playerInRanking(playersNameView.getText().toString());
+            if(playerInRanking == false){
                 ranking.add(playersNameView.getText().toString());
             }
         }

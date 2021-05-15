@@ -44,6 +44,23 @@
     <string name="worp_3">worp 3</string>
     <string name="worp_2">worp 2</string>
     <string name="worp_voltooid">worp voltooid</string>
+    <string name="end_of_the_game">end of the game</string>
+    <string name="results">results</string>
+    <string name="throws_player_1">throws player 1</string>
+    <string name="throws_player_2">throws player 2</string>
+    <string name="throws_player_3">throws player 3</string>
+    <string name="throws_player_4">throws player 4</string>
+    <string name="highest_score_1_throw_player3">highest score 1 throw player3</string>
+    <string name="highest_score_1_throw_player2">highest score 1 throw player2</string>
+    <string name="highest_score_1_throw_player1">highest score 1 throw player1</string>
+    <string name="best_throw">best throw</string>
+    <string name="highest_score_1_throw_player4">highest score 1 throw player4</string>
+    <string name="firstplayername">firstplayername</string>
+    <string name="secondplayername">secondPlayerName</string>
+    <string name="thirdplayername">thirdPlayerName</string>
+    <string name="fourthplayername">fourthPlayerName</string>
+    <string name="ranking">ranking</string>
+    <string name="numberThrows">Throws:</string>
 
     <string-array name="zero_twenty">
         <item> 0</item>

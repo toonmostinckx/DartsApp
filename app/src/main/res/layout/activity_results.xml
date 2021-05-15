@@ -86,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:text="@string/number_of_throws"
+        android:text="@string/numberThrows"
         app:layout_constraintEnd_toStartOf="@+id/highestScoreInOneThrow"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ranking"
@@ -97,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:text="@string/highest_score_in_one_throw"
+        android:text="@string/best_throw"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/numberOfThrows"
@@ -108,7 +108,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/thr0ws_player_1"
+        android:text="@string/throws_player_1"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
         app:layout_constraintTop_toBottomOf="@+id/numberOfThrows" />
 
@@ -118,6 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/throws_player_2"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
         app:layout_constraintTop_toBottomOf="@+id/numberOfThrowsPlayer1" />
 
@@ -127,6 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/throws_player_3"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
         app:layout_constraintTop_toBottomOf="@+id/numberOfThrowsPlayer2" />
 
@@ -136,6 +139,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/throws_player_4"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/numberOfThrows"
         app:layout_constraintTop_toBottomOf="@+id/numberOfThrowsPlayer3" />
 
@@ -144,7 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/highestscoreplayer1"
+        android:text="@string/highest_score_1_throw_player1"
         app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
         app:layout_constraintTop_toBottomOf="@+id/highestScoreInOneThrow" />
 
@@ -153,7 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/highestscoreplayer1"
+        android:text="@string/highest_score_1_throw_player2"
         app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
         app:layout_constraintTop_toBottomOf="@+id/highestScorePlayer1" />
 
@@ -162,7 +166,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/highestscoreplayer1"
+        android:text="@string/highest_score_1_throw_player3"
         app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
         app:layout_constraintTop_toBottomOf="@+id/highestScorePlayer2" />
 
@@ -171,7 +175,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/highestscoreplayer1"
+        android:text="@string/highest_score_1_throw_player4"
         app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
         app:layout_constraintTop_toBottomOf="@+id/highestScorePlayer3" />
 
