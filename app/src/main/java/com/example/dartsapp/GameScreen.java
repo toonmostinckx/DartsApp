@@ -232,6 +232,7 @@ public class GameScreen extends AppCompatActivity {
             Intent intentGameScreen = new Intent(this, Results.class);
             intentGameScreen.putExtra("ranking", ranking);
             intentGameScreen.putExtra("numberOfThrowsOfAllPlayers", numberOfThrowsOfAllPlayers);
+            intentGameScreen.putExtra("numberOfPlayers", numberOfPlayers);
             startActivity(intentGameScreen);
         }
     }

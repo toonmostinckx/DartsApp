@@ -41,7 +41,7 @@ public class Results extends AppCompatActivity {
         rankingPlayersTextView.add(fourthPlayerName);
         rankingOfPlayersNames = new ArrayList<>();
         rankingOfPlayersNames = extras.getStringArrayList("ranking");
-        numberOfPlayers = rankingOfPlayersNames.size();
+        numberOfPlayers = extras.getInt("numberOfPlayers");
 
         setTextViewsVisible(rankingPlayersTextView, rankingOfPlayersNames);
 
