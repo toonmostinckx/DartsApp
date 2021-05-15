@@ -2,6 +2,7 @@ package com.example.dartsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,11 +19,14 @@ public class GameScreen extends AppCompatActivity {
     private TextView nameOfPlayer2;
     private TextView nameOfPlayer3;
     private TextView nameOfPlayer4;
+    private ArrayList<TextView> playersNames;
+
     private TextView scorePlayer1;
     private TextView scorePlayer2;
     private TextView scorePlayer3;
     private TextView scorePlayer4;
     private ArrayList<TextView> pointsOfPlayers;
+
     private Spinner points1;
     private Spinner points2;
     private Spinner points3;
@@ -32,8 +36,10 @@ public class GameScreen extends AppCompatActivity {
     private Button throwCompleted;
     private int player = 0;
     private int numberOfPlayers;
+    private int numberOfThrows= 0;
     private ArrayList<String> ranking;
-    private ArrayList<TextView> playersNames;
+
+    private ArrayList<Integer> numberOfThrowsOfAllPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +49,10 @@ public class GameScreen extends AppCompatActivity {
         pointsOfPlayers = new ArrayList<>();
         ranking = new ArrayList<>();
         playersNames = new ArrayList<>();
+        numberOfThrowsOfAllPlayers = new ArrayList<>();
 
         nameOfPlayer1 = (TextView) findViewById((R.id.namePlayer1));
+        nameOfPlayer1.setBackgroundColor(0xFF00FF00);
         nameOfPlayer2 = (TextView) findViewById((R.id.namePlayer2));;
         nameOfPlayer3 = (TextView) findViewById((R.id.namePlayer3));
         nameOfPlayer4 = (TextView) findViewById((R.id.namePlayer4));
@@ -83,6 +91,9 @@ public class GameScreen extends AppCompatActivity {
         numberOfPlayers = getNumberOfPlayers(extras);
     }
 
+    private void addNumberOfThrowsOfAllPlayers(int numberOfThrows){
+        numberOfThrowsOfAllPlayers.add(numberOfThrows);
+    }
     private void addPlayerToRanking(TextView player){
         boolean playerInList = false;
         for(String playerName: ranking){
@@ -92,6 +103,7 @@ public class GameScreen extends AppCompatActivity {
         }
         if(playerInList == false){
             ranking.add(player.getText().toString());
+            addNumberOfThrowsOfAllPlayers(numberOfThrows);
         }
     }
 
@@ -99,15 +111,37 @@ public class GameScreen extends AppCompatActivity {
         return extras.getInt("numberOfPlayers");
     }
 
-    public void clickedOnBtnThrowCompleted(View caller){
-        if(player >= numberOfPlayers){
-            player = 0;
-            setPoints(pointsOfPlayers.get(player));
-            player++;
+    private void setGreenBackGroundToPlayersName(int playerWhoNeedsToThrow){
+        playersNames.get(playerWhoNeedsToThrow).setBackgroundColor(0xFF00FF00);
+    }
+
+    private void deleteBackGroundColor(int playerWhoHasThrown){
+        playersNames.get(player).setBackgroundColor(0x00000000);
+    }
+
+    private void setBackGroundColorForNextPlayer(int playerWhoNeedsToThrow){
+        if(playerWhoNeedsToThrow >= numberOfPlayers){
+            setGreenBackGroundToPlayersName(0);
         }
         else{
+            setGreenBackGroundToPlayersName(playerWhoNeedsToThrow);
+        }
+    }
+
+    public void clickedOnBtnThrowCompleted(View caller){
+        numberOfThrows++;
+        if(player >= numberOfPlayers){
+            player = 0;
+            deleteBackGroundColor(player);
             setPoints(pointsOfPlayers.get(player));
             player++;
+            setGreenBackGroundToPlayersName(player);
+        }
+        else{
+            deleteBackGroundColor(player);
+            setPoints(pointsOfPlayers.get(player));
+            player++;
+            setBackGroundColorForNextPlayer(player);
         }
     }
 
@@ -125,6 +159,7 @@ public class GameScreen extends AppCompatActivity {
         }
         if(pointsAfterThrow == 0){
             addPlayerToRanking(playersNames.get(player));
+            checkForTheEndOfTheGame();
             return 0;
         }
         else {
@@ -157,6 +192,34 @@ public class GameScreen extends AppCompatActivity {
         }
         else {
             nameOfPlayer.setVisibility(View.GONE);
+        }
+    }
+
+    private void addLastPlayerInRanking(){
+        for(TextView playersNameView: playersNames){
+            if(playerInRanking(playersNameView.getText().toString()) == false){
+                ranking.add(playersNameView.getText().toString());
+            }
+        }
+    }
+
+    private boolean playerInRanking(String playersNameVieW){
+        boolean playerInRanking = false;
+        for(String nameInRanking: ranking){
+            if(nameInRanking == playersNameVieW){
+                playerInRanking = true;
+            }
+        }
+        return playerInRanking;
+    }
+
+    private void checkForTheEndOfTheGame(){
+        if(ranking.size() == numberOfPlayers - 1){
+            addLastPlayerInRanking();
+            Intent intentGameScreen = new Intent(this, Results.class);
+            intentGameScreen.putExtra("ranking", ranking);
+            intentGameScreen.putExtra("numberOfThrowsOfAllPlayers", numberOfThrowsOfAllPlayers);
+            startActivity(intentGameScreen);
         }
     }
 }

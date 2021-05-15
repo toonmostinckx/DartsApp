@@ -43,7 +43,6 @@
     <string name="worp_3">worp 3</string>
     <string name="worp_2">worp 2</string>
     <string name="worp_voltooid">worp voltooid</string>
-    <string name="username">Username</string>
 
     <string-array name="zero_twenty">
         <item> 0</item>
