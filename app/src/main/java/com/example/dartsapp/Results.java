@@ -61,8 +61,15 @@ public class Results extends AppCompatActivity {
 
     private ArrayList<String> changeArrayListIntegerToArrayListString(ArrayList<Integer> arrayListInteger){
         ArrayList<String> arrayListString = new ArrayList<>();
-        for(Integer i: arrayListInteger){
-            arrayListString.add(i.toString());
+        int i = 0;
+        for(Integer numberOfThrows: arrayListInteger){
+            i++;
+            if(i ==  numberOfPlayers) {
+                arrayListString.add("not finished");
+            }
+            else{
+                arrayListString.add(numberOfThrows.toString());
+            }
         }
         return arrayListString;
     }
