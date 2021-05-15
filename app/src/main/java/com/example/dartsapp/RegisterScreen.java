@@ -76,7 +76,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
     private void checkExistingEmail(User user) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        boolean existing = true;
 
         String requestURL = "https://studev.groept.be/api/a20sd111/checkExistingEmail/" + user.getEmail();
 
@@ -85,17 +84,22 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                 response -> {
                     try {
                         JSONObject cur = response.getJSONObject(0);
-                        if(cur.get("email") == null){
-                            registerUser(user);
+                        if(cur.get("Email") != null){
+                            Log.e("Register", "Register user failed");
+                            String errorMessage = "Email already registered";
+                            errorMessageBox.setText(errorMessage);
+
+                            //clear passwords
+                            passwordBox.setText("");
+                            repeatPasswordBox.setText("");
                         }
                     } catch (JSONException e) {
                         registerUser(user);
                     }
-
                 },
                 error -> {
                     Log.e("Register", "Register user failed");
-                    String errorMessage = "Email already registered to a user";
+                    String errorMessage = "No connectivity to the database";
                     errorMessageBox.setText(errorMessage);
 
                     //clear passwords
@@ -114,9 +118,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
-                response -> {
-                    goGetID(user);
-                },
+                response -> goGetID(user),
                 error -> {
                     Log.e("Register", "Register user failed");
                     String errorMessage = "Registering user failed";
