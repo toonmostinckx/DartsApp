@@ -24,6 +24,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     Button newGameButton;
     Button accountButton;
     String name;
+    String ID;
     String signinType;
 
     @Override
@@ -52,7 +53,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     }
 
     private void UpdateUIManual(Bundle intent) {
-        name = intent.get("Name").toString();
+        ID = intent.get("ID").toString();
 
         TextView greeting = findViewById(R.id.WelcomeUser);
         String welcome = "Welcome " + name;
@@ -88,7 +89,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     //logs the google account out and returns to the starting screen
     private void signOut() {
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> goToLoginScreen());
+        if(signinType.equals("Google")){
+            mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> goToLoginScreen());
+        }else if(signinType.equals("Manual")){
+            goToLoginScreen();
+        }
+
     }
 
     private void goToLoginScreen(){

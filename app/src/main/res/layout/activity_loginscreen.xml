@@ -66,4 +66,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
 
+    <TextView
+        android:id="@+id/LoginScreen_ErrorBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#E42828"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/Manual_Signin_Password"
+        app:layout_constraintTop_toBottomOf="@+id/Manual_Signin_Password" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

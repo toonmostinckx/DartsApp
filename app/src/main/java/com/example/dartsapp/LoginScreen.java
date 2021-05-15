@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -36,6 +37,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     Button manualSigninButton;
     Button registerButton;
+    TextView errorBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         //setup the account info text fields
         emailField = (EditText) findViewById(R.id.Manual_Signin_Email);
         passwordField = (EditText) findViewById(R.id.Manual_Signin_Password);
+        errorBox = (TextView) findViewById(R.id.LoginScreen_ErrorBox);
     }
 
     @Override
@@ -116,17 +119,23 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 response -> {
                     try {
                         JSONObject responseJSON = response.getJSONObject(0);
-                        if(responseJSON.get("ID") != null){
+                        if(responseJSON.get("UserID") != null){
                             user.setID(responseJSON.get("ID").toString());
                             goToDashboardManual(user);
                         }
                     } catch (JSONException e) {
+                        //Should add text to say the password isn't valid
+                        String errorMessage = "Login not valid";
+                        errorBox.setText(errorMessage);
                         e.printStackTrace();
                     }
 
                 }
                 ,
-                error -> {}
+                error -> {
+                    String errorMessage = "Login not valid";
+                    errorBox.setText(errorMessage);
+                }
         );
 
         requestQueue.add(submitRequest);
