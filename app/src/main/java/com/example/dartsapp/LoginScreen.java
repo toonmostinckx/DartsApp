@@ -33,7 +33,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     private EditText emailField;
     private EditText passwordField;
-    private RequestQueue requestQueue;
 
     Button manualSigninButton;
     Button registerButton;
@@ -66,9 +65,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         registerButton.setOnClickListener(this);
 
         //setup the account info text fields
-        emailField = (EditText) findViewById(R.id.Manual_Signin_Email);
-        passwordField = (EditText) findViewById(R.id.Manual_Signin_Password);
-        errorBox = (TextView) findViewById(R.id.LoginScreen_ErrorBox);
+        emailField = findViewById(R.id.Manual_Signin_Email);
+        passwordField = findViewById(R.id.Manual_Signin_Password);
+        errorBox = findViewById(R.id.LoginScreen_ErrorBox);
     }
 
     @Override
@@ -110,7 +109,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     private void checkPassHash(User user)
     {
-        requestQueue = Volley.newRequestQueue( this );
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         String requestURL = "https://studev.groept.be/api/a20sd111/checkLogin/" + user.getEmail() + "/" + user.getPassHash();
 
