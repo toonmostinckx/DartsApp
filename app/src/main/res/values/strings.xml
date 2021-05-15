@@ -25,6 +25,7 @@
     <string name="account">Account</string>
     <string name="profile_picture_of_the_user">Profile Picture of the user</string>
     <string name="id">ID</string>
+    <string name="username">Username</string>
     <string name="button">Button</string>
     <string name="full_name">Full Name</string>
     <string name="repeat_password">Repeat Password</string>
