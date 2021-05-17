@@ -84,15 +84,14 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                 response -> {
                     try {
                         JSONObject cur = response.getJSONObject(0);
-                        if(cur.get("Email") != null){
-                            Log.e("Register", "Register user failed");
-                            String errorMessage = "Email already registered";
-                            errorMessageBox.setText(errorMessage);
+                        cur.get("Email");
+                        Log.e("Register", "Register user failed");
+                        String errorMessage = "Email already registered";
+                        errorMessageBox.setText(errorMessage);
 
-                            //clear passwords
-                            passwordBox.setText("");
-                            repeatPasswordBox.setText("");
-                        }
+                        //clear passwords
+                        passwordBox.setText("");
+                        repeatPasswordBox.setText("");
                     } catch (JSONException e) {
                         registerUser(user);
                     }
@@ -120,7 +119,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
                 response -> goGetID(user),
                 error -> {
-                    Log.e("Register", "Register user failed");
                     String errorMessage = "Registering user failed";
                     errorMessageBox.setText(errorMessage);
                 }
@@ -133,24 +131,20 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         String requestURL = "https://studev.groept.be/api/a20sd111/getID/" + user.getEmail();
-        Log.e("TAG", "Email: " + requestURL);
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
                 response -> {
                     try {
                         JSONObject tmp = response.getJSONObject(0);
-                        Log.d("IMPORTANT", tmp.get("UserID").toString());
                         user.setID(tmp.get("UserID").toString());
                         goToDashboardManual(user);
                     } catch (JSONException e) {
-                        Log.e("Register", "Register user failed");
                         String errorMessage = "Getting ID failed";
                         errorMessageBox.setText(errorMessage);
                     }
 
                 },
                 error -> {
-                    Log.e("Register", "Register user failed");
                     String errorMessage = "Getting ID failed";
                     errorMessageBox.setText(errorMessage);
                 }

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -53,24 +52,15 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         if(signinType.equals("Google")){
             UpdateUIGoogle();
         }else if(signinType.equals("Manual")){
-            UpdateUIManual(intent);
+            updateUIManual(intent);
         }
     }
 
-    private void UpdateUIManual(Bundle intent) {
+    private void updateUIManual(Bundle intent) {
         ID = intent.getString("ID");
-
-        TextView greeting = findViewById(R.id.WelcomeUser);
-        String welcome = "Welcome";
-
-        pullNameFromDatabase(ID);
-        greeting.setText(welcome);
-    }
-
-    private void pullNameFromDatabase(String id) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        String requestURL = "https://studev.groept.be/api/a20sd111/getName/" + id;
+        String requestURL = "https://studev.groept.be/api/a20sd111/getName/" + ID;
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
@@ -81,13 +71,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                         String welcome = "Welcome " + Name;
                         TextView greeting = findViewById(R.id.WelcomeUser);
                         greeting.setText(welcome);
-                    } catch (JSONException ignored) {
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
-                }
-                ,
-                error -> {
-                }
+                },
+                Throwable::printStackTrace
         );
 
         requestQueue.add(submitRequest);
@@ -107,7 +96,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    //handles clicks (Onclick method doet wat moeilijk op dit scherm)
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.SignoutButton) {

@@ -92,11 +92,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    private void goToRegisterScreen() {
-        Intent intent = new Intent(this, RegisterScreen.class);
-        startActivity(intent);
-    }
-
     public void manualSignIn() {
         // check if the account is valid and registered
         String currentEmail = emailField.getText().toString();
@@ -118,19 +113,17 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 response -> {
                     try {
                         JSONObject responseJSON = response.getJSONObject(0);
-                        if(responseJSON.get("UserID") != null){
-                            String ID = responseJSON.get("UserID").toString();
-                            User currentUser = new User(ID);
-                            Log.e("TAG", "Username is: " + currentUser.getName());
-                            goToDashboardManual(currentUser);
-                        }
+                        responseJSON.get("UserID");
+                        String ID = responseJSON.get("UserID").toString();
+                        User currentUser = new User(ID);
+                        Log.e("TAG", "Username is: " + currentUser.getName());
+                        goToDashboardManual(currentUser);
                     } catch (JSONException e) {
                         //Should add text to say the password isn't valid
                         String errorMessage = "Username and/or password are not valid";
                         errorBox.setText(errorMessage);
                         e.printStackTrace();
                     }
-
                 }
                 ,
                 error -> {
@@ -189,6 +182,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         Intent intent = new Intent(this, Dashboard.class);
         intent.putExtra("SigninType", "Manual");
         intent.putExtra("ID", user.getID());
+        startActivity(intent);
+    }
+
+    private void goToRegisterScreen() {
+        Intent intent = new Intent(this, RegisterScreen.class);
         startActivity(intent);
     }
 }

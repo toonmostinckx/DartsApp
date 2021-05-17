@@ -61,7 +61,6 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
         if(acct != null) {
             String name = acct.getDisplayName();
             String email = acct.getEmail();
-            String ID = acct.getId();
             Uri ProfilePictureURI = acct.getPhotoUrl();
 
             if(name != null){
@@ -100,7 +99,6 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
                         emailBox.setText(emailBoxText);
 
                     } catch (JSONException e) {
-                        Log.e("SERVER", "Server doesn't respond");
                         e.printStackTrace();
                     }
 
