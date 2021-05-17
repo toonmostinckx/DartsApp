@@ -161,6 +161,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
     public void goToDashboardManual(User user){
         String ID = user.getID();
+
         Intent intent = new Intent(this, Dashboard.class);
         intent.putExtra("SigninType", "Manual");
         intent.putExtra("ID", ID);

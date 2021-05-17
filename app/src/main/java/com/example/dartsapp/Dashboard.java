@@ -1,31 +1,36 @@
 package com.example.dartsapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Dashboard extends AppCompatActivity implements View.OnClickListener{
 
     GoogleSignInClient mGoogleSignInClient;
+
     Button signOutButton;
     Button newGameButton;
     Button accountButton;
     String name;
-    String ID;
     String signinType;
+    String ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +38,13 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_dashboard);
 
         //Configure a listener on the signout button
-        signOutButton = (Button) findViewById(R.id.SignoutButton);
+        signOutButton = findViewById(R.id.SignoutButton);
         signOutButton.setOnClickListener(this);
 
-        newGameButton = (Button) findViewById(R.id.NewGameButton);
+        newGameButton = findViewById(R.id.NewGameButton);
         newGameButton.setOnClickListener(this);
 
-        accountButton = (Button) findViewById(R.id.AccountScreenButton);
+        accountButton = findViewById(R.id.AccountScreenButton);
         accountButton.setOnClickListener(this);
 
         //handle different signin options
@@ -53,15 +58,44 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     }
 
     private void UpdateUIManual(Bundle intent) {
-        ID = intent.get("ID").toString();
+        ID = intent.getString("ID");
 
         TextView greeting = findViewById(R.id.WelcomeUser);
-        String welcome = "Welcome " + name;
+        String welcome = "Welcome";
+
+        pullNameFromDatabase(ID);
         greeting.setText(welcome);
+    }
+
+    private void pullNameFromDatabase(String id) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        String requestURL = "https://studev.groept.be/api/a20sd111/getName/" + id;
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                response -> {
+                    try {
+                        JSONObject responseJSON = response.getJSONObject(0);
+                        String Name = responseJSON.get("Name").toString();
+                        String welcome = "Welcome " + Name;
+                        TextView greeting = findViewById(R.id.WelcomeUser);
+                        greeting.setText(welcome);
+                    } catch (JSONException ignored) {
+                    }
+
+                }
+                ,
+                error -> {
+                }
+        );
+
+        requestQueue.add(submitRequest);
     }
 
     private void UpdateUIGoogle() {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        assert acct != null;
         name = acct.getDisplayName();
 
         TextView greeting = findViewById(R.id.WelcomeUser);
@@ -110,6 +144,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private void goToAccountScreen(){
         Intent intent = new Intent(this, AccountScreen.class);
         intent.putExtra("SigninType", signinType);
+        if(signinType.equals("Manual")){
+            intent.putExtra("ID", ID);
+        }
         startActivity(intent);
     }
 }

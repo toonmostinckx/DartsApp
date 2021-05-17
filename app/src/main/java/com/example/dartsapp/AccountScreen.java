@@ -6,22 +6,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class AccountScreen extends AppCompatActivity implements View.OnClickListener{
     TextView nameBox;
     TextView emailBox;
-    TextView IDBox;
     ImageView profilePicture;
 
     String signinType;
+    String ID;
 
     Button backButton;
 
@@ -32,7 +40,6 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
 
         nameBox = findViewById(R.id.AccountScreen_NameBox);
         emailBox = findViewById(R.id.AccountScreen_EmailBox);
-        IDBox = findViewById(R.id.AccountScreen_IDBox);
         profilePicture = findViewById(R.id.AccountScreen_ProfilePicture);
 
         backButton = findViewById(R.id.AccountScreen_BackButton);
@@ -58,16 +65,12 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
             Uri ProfilePictureURI = acct.getPhotoUrl();
 
             if(name != null){
-                String nameBoxText = "Name: " + name;
+                String nameBoxText = "Username: " + name;
                 nameBox.setText(nameBoxText);
             }
             if(email != null){
                 String emailBoxText = "Email: " + email;
                 emailBox.setText(emailBoxText);
-            }
-            if(ID != null){
-                String IDBoxText = "Google ID: " + ID;
-                IDBox.setText(IDBoxText);
             }
             if(ProfilePictureURI != null){
                 Picasso.get().load(ProfilePictureURI.toString()).into(profilePicture);
@@ -76,7 +79,37 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
     }
 
     void UpdateUIManual(Bundle intent){
-        String name = intent.get("Name").toString();
+        ID = intent.get("ID").toString();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        String requestURL = "https://studev.groept.be/api/a20sd111/getUserInfoFromID/" + ID;
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                response -> {
+                    try {
+                        JSONObject responseJSON = response.getJSONObject(0);
+                        String Name = responseJSON.get("Name").toString();
+                        String Email = responseJSON.get("Email").toString();
+
+                        String nameBoxText = "Username: " + Name;
+                        nameBox.setText(nameBoxText);
+
+                        String emailBoxText = "Email: " + Email;
+                        emailBox.setText(emailBoxText);
+
+                    } catch (JSONException e) {
+                        Log.e("SERVER", "Server doesn't respond");
+                        e.printStackTrace();
+                    }
+
+                }
+                ,
+                Throwable::printStackTrace
+        );
+
+        requestQueue.add(submitRequest);
     }
 
     @Override
@@ -88,6 +121,10 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
 
     void toDashboard(){
         Intent intent = new Intent(this, Dashboard.class);
+        intent.putExtra("SigninType", signinType);
+        if(signinType.equals("Manual")){
+            intent.putExtra("ID", ID);
+        }
         startActivity(intent);
     }
 }

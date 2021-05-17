@@ -119,8 +119,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     try {
                         JSONObject responseJSON = response.getJSONObject(0);
                         if(responseJSON.get("UserID") != null){
-                            user.setID(responseJSON.get("UserID").toString());
-                            goToDashboardManual(user);
+                            String ID = responseJSON.get("UserID").toString();
+                            User currentUser = new User(ID);
+                            Log.e("TAG", "Username is: " + currentUser.getName());
+                            goToDashboardManual(currentUser);
                         }
                     } catch (JSONException e) {
                         //Should add text to say the password isn't valid

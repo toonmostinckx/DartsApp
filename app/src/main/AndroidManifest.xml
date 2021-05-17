@@ -10,8 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DartsApp">
-        <activity android:name=".Results"></activity>
+        android:theme="@style/Theme.DartsApp"
+        android:name="com.example.dartsapp.App">
+        <activity android:name=".Results" />
         <activity android:name=".RegisterScreen" />
         <activity android:name=".AccountScreen" />
         <activity android:name=".Dashboard" />
