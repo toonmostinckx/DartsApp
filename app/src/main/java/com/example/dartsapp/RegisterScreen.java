@@ -64,12 +64,11 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        String name = nameBox.getText().toString();
         String email = emailBox.getText().toString();
         String passWord = passwordBox.getText().toString();
 
         //now register in the database
-        User tmp = new User(name, email, passWord);
+        User tmp = new User(email, passWord);
         checkExistingEmail(tmp);
     }
 
@@ -113,7 +112,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
     public void registerUser(User user) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        String requestURL = "https://studev.groept.be/api/a20sd111/registerUser/" + user.getName() + "/" + user.getEmail() + "/" + user.getPassHash();
+        String requestURL = "https://studev.groept.be/api/a20sd111/registerUser/" + nameBox.getText().toString() + "/" + user.getEmail() + "/" + user.getPassHash();
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
