@@ -23,7 +23,13 @@ public class Results extends AppCompatActivity {
     private TextView numberOfThrowsPlayer4;
     private ArrayList<TextView> numberOfThrowsTextView;
     private ArrayList<Integer> numberOfThrowsInteger;
-    
+
+    private TextView highestScorePlayer1;
+    private TextView highestScorePlayer2;
+    private TextView highestScorePlayer3;
+    private TextView highestScorePlayer4;
+    private ArrayList<TextView> highestScoreAllPlayersTextView;
+    private ArrayList<Integer> highestScoreAllPlayersInteger;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +63,19 @@ public class Results extends AppCompatActivity {
         numberOfThrowsInteger = extras.getIntegerArrayList("numberOfThrowsOfAllPlayers");
 
         setTextViewsVisible(numberOfThrowsTextView, changeArrayListIntegerToArrayListString(numberOfThrowsInteger));
+
+        highestScoreAllPlayersTextView = new ArrayList<>();
+        highestScorePlayer1 = (TextView) findViewById(R.id.highestScorePlayer1);
+        highestScorePlayer2 = (TextView) findViewById(R.id.highestScorePlayer2);
+        highestScorePlayer3 = (TextView) findViewById(R.id.highestScorePlayer3);
+        highestScorePlayer4 = (TextView) findViewById(R.id.highestScorePlayer4);
+        highestScoreAllPlayersTextView.add(highestScorePlayer1);
+        highestScoreAllPlayersTextView.add(highestScorePlayer2);
+        highestScoreAllPlayersTextView.add(highestScorePlayer3);
+        highestScoreAllPlayersTextView.add(highestScorePlayer4);
+        highestScoreAllPlayersInteger = extras.getIntegerArrayList("highestScoreInOneThrowOFAllPlayers");
+
+        setTextViewsVisible(highestScoreAllPlayersTextView, changeArrayListIntegerToArrayListString(highestScoreAllPlayersInteger));
     }
 
     private ArrayList<String> changeArrayListIntegerToArrayListString(ArrayList<Integer> arrayListInteger){
