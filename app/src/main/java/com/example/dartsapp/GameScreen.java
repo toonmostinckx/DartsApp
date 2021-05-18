@@ -41,6 +41,7 @@ public class GameScreen extends AppCompatActivity {
 
     private ArrayList<Integer> numberOfThrowsOfAllPlayers;
     private ArrayList<Integer> highestThrowOfAllPlayers;
+    private ArrayList<Integer> highestThrowOfAllPlayersInOrderOfRanking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class GameScreen extends AppCompatActivity {
         playersNames = new ArrayList<>();
         numberOfThrowsOfAllPlayers = new ArrayList<>();
         highestThrowOfAllPlayers = new ArrayList<>();
+        highestThrowOfAllPlayersInOrderOfRanking = new ArrayList<>();
 
         nameOfPlayer1 = (TextView) findViewById((R.id.namePlayer1));
         nameOfPlayer1.setBackgroundColor(0xFF00FF00);
@@ -171,6 +173,8 @@ public class GameScreen extends AppCompatActivity {
         }
         if(pointsAfterThrow == 0){
             addPlayerToRanking(playersNames.get(player));
+            Integer scoreOfPlayer = highestThrowOfAllPlayers.get(player);
+            highestThrowOfAllPlayersInOrderOfRanking.add(scoreOfPlayer);
             checkForTheEndOfTheGame();
             return 0;
         }
@@ -216,7 +220,7 @@ public class GameScreen extends AppCompatActivity {
             if(playerInRanking == false){
                 ranking.add(playersNameView.getText().toString());
                 addNumberOfThrowsOfAllPlayers(-1); //add number -1 to last player who didnt get to zero points
-                highestThrowOfAllPlayers.add(numberOfPlayers - 1, -1); //add number -1 to last player who didnt get to zero points
+                highestThrowOfAllPlayersInOrderOfRanking.add(numberOfPlayers - 1, -1); //add number -1 to last player who didnt get to zero points
             }
         }
     }
@@ -231,7 +235,7 @@ public class GameScreen extends AppCompatActivity {
         return playerInRanking;
     }
 
-    private void setHighestScoreInOneThrow(int player, int scoreInOneThrow){
+    private void setHighestScoreInOneThrow(int player, int scoreInOneThrow){ //create list with best score og player one at index zero
         if(highestThrowOfAllPlayers.size() >= numberOfPlayers ){
             if(scoreInOneThrow > highestThrowOfAllPlayers.get(player)){
                 highestThrowOfAllPlayers.remove(player);
@@ -250,7 +254,7 @@ public class GameScreen extends AppCompatActivity {
             intentGameScreen.putExtra("ranking", ranking);
             intentGameScreen.putExtra("numberOfThrowsOfAllPlayers", numberOfThrowsOfAllPlayers);
             intentGameScreen.putExtra("numberOfPlayers", numberOfPlayers);
-            intentGameScreen.putExtra("highestScoreInOneThrowOFAllPlayers", highestThrowOfAllPlayers);
+            intentGameScreen.putExtra("highestScoreInOneThrowOFAllPlayers", highestThrowOfAllPlayersInOrderOfRanking);
             startActivity(intentGameScreen);
         }
     }
