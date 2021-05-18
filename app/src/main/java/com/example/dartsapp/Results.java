@@ -2,7 +2,9 @@ package com.example.dartsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -99,4 +101,14 @@ public class Results extends AppCompatActivity {
             textViewArrayList.get(i).setText(listWithText.get(i));
         }
     }
+
+    public void clickedOnBtnStartNewGame(View caller){
+        Intent newGameIntent = new Intent (this, InitializingGame.class);
+        startActivity(newGameIntent);
+    }
+
+//    public void clickedOnBtnMenu(View caller){ aan gijs vragen hoe daqhboard starten
+//        Intent menuIntent = new Intent(this, Dashboard.class);
+//        startActivity(menuIntent);
+//    }
 }
