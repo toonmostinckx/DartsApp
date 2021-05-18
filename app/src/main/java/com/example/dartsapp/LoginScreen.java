@@ -113,11 +113,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 response -> {
                     try {
                         JSONObject responseJSON = response.getJSONObject(0);
-                        responseJSON.get("UserID");
                         String ID = responseJSON.get("UserID").toString();
-                        User currentUser = new User(ID);
-                        Log.e("TAG", "Username is: " + currentUser.getName());
-                        goToDashboardManual(currentUser);
+                        goToDashboardManual(ID);
                     } catch (JSONException e) {
                         //Should add text to say the password isn't valid
                         String errorMessage = "Username and/or password are not valid";
@@ -178,10 +175,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         startActivity(intent);
     }
 
-    private void goToDashboardManual(User user) {
+    private void goToDashboardManual(String ID) {
         Intent intent = new Intent(this, Dashboard.class);
         intent.putExtra("SigninType", "Manual");
-        intent.putExtra("ID", user.getID());
+        intent.putExtra("ID", ID);
         startActivity(intent);
     }
 
