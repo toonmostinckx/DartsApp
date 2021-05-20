@@ -4,8 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -32,6 +45,12 @@ public class Results extends AppCompatActivity {
     private TextView highestScorePlayer4;
     private ArrayList<TextView> highestScoreAllPlayersTextView;
     private ArrayList<Integer> highestScoreAllPlayersInteger;
+
+    private RequestQueue requestQueue;
+    private TextView txtResponse;
+    private String[] nameOfAllUsersInDB;
+    private String[] highestScoreOfAllUsersInDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +97,9 @@ public class Results extends AppCompatActivity {
         highestScoreAllPlayersInteger = extras.getIntegerArrayList("highestScoreInOneThrowOFAllPlayers");
 
         setTextViewsVisible(highestScoreAllPlayersTextView, changeArrayListIntegerToArrayListString(highestScoreAllPlayersInteger));
+        
+        txtResponse = (TextView) findViewById(R.id.txtResponse);
+       
     }
 
     private ArrayList<String> changeArrayListIntegerToArrayListString(ArrayList<Integer> arrayListInteger){
@@ -106,6 +128,79 @@ public class Results extends AppCompatActivity {
         Intent newGameIntent = new Intent (this, InitializingGame.class);
         startActivity(newGameIntent);
     }
+
+    public void getHighestScoreInDataBase(View v)
+    {
+        requestQueue = Volley.newRequestQueue( this );
+        String requestURL = "https://studev.groept.be/api/a20sd111/getHighestScoreOfPlayers";
+
+        StringRequest submitRequest = new StringRequest(Request.Method.GET, requestURL,
+
+                response -> {
+                    try {
+                        JSONArray responseArray = new JSONArray(response);
+                        String responseString = "";
+                        for( int i = 0; i < responseArray.length(); i++ )
+                        {
+                            JSONObject curObject = responseArray.getJSONObject( i );
+                            responseString += curObject.getString( "highestScore" ) + ",";
+                        }
+                        highestScoreOfAllUsersInDB = createArrayListFromResponseString(responseString);
+                        txtResponse.setText(responseString);
+                    }
+                    catch( JSONException e )
+                    {
+                        Log.e( "Database", e.getMessage(), e );
+                    }
+                },
+
+                error -> txtResponse.setText( error.getLocalizedMessage() )
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
+    private String[] createArrayListFromResponseString(String responseString){
+        String responseArray [] = responseString.split(",");
+        return responseArray;
+    }
+
+    public void clickedOnBtnMenu(View caller){
+        getHighestScoreInDataBase(caller);
+        getNamesOfPlayersInDB(caller);
+    }
+
+    public void getNamesOfPlayersInDB(View v)
+    {
+        requestQueue = Volley.newRequestQueue( this );
+        String requestURL = "https://studev.groept.be/api/a20sd111/getAllNames";
+
+        StringRequest submitRequest = new StringRequest(Request.Method.GET, requestURL,
+
+                response -> {
+                    try {
+                        JSONArray responseArray = new JSONArray(response);
+                        String responseString = "";
+                        for( int i = 0; i < responseArray.length(); i++ )
+                        {
+                            JSONObject curObject = responseArray.getJSONObject( i );
+                            responseString += curObject.getString( "name" ) + ",";
+                        }
+                        nameOfAllUsersInDB = createArrayListFromResponseString(responseString);
+                        //txtResponse.setText(responseString);
+                    }
+                    catch( JSONException e )
+                    {
+                        Log.e( "Database", e.getMessage(), e );
+                    }
+                },
+
+                error -> txtResponse.setText( error.getLocalizedMessage() )
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
 
 //    public void clickedOnBtnMenu(View caller){ aan gijs vragen hoe daqhboard starten
 //        Intent menuIntent = new Intent(this, Dashboard.class);

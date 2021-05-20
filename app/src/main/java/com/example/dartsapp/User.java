@@ -15,10 +15,12 @@ public class User{
     private final String password;
     private String passHash;
     private String ID;
+    private int highestScoreInOneThrow;
 
     public User(String email, String password){
         this.email = email;
         this.password = password;
+        highestScoreInOneThrow = 0;
 
         try {
             this.passHash = this.hashPassword();
@@ -28,6 +30,13 @@ public class User{
     }
 
     //methods
+    public int getHighestScoreInOneThrow() {
+        return highestScoreInOneThrow;
+    }
+
+    public void setHighestScoreInOneThrow(int highestScoreInOneThrow) {
+        this.highestScoreInOneThrow = highestScoreInOneThrow;
+    }
 
     public String getID() {
         return ID;

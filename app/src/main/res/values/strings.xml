@@ -64,6 +64,7 @@
     <string name="start_new_game">Start new game</string>
     <string name="go_to_profile">Go to profile</string>
     <string name="menu">menu</string>
+    <string name="databaseinfo">dataBaseInfo</string>
 
     <string-array name="zero_twenty">
         <item> 0</item>
