@@ -200,8 +200,28 @@ public class Results extends AppCompatActivity {
 
         requestQueue.add(submitRequest);
     }
+    private void playersInDB(ArrayList<String> nameOFPlayersWhoGetToZeroPoints){
+        for(String namePlayer: nameOFPlayersWhoGetToZeroPoints){
+            if(true == playerInDB(namePlayer)){
+                updateHighScore(namePlayer, true);
+            }
+        }
+    }
 
+    private boolean playerInDB(String player){
+        boolean playerInDB = false;
+        for(String userInDB: nameOfAllUsersInDB){
+            playerInDB = true;
+        }
+        if(playerInDB == false){
+            updateHighScore(player, false);
+        }
+        return playerInDB;
+    }
 
+    private void updateHighScore(String name, boolean alreadyInDB){
+
+    }
 //    public void clickedOnBtnMenu(View caller){ aan gijs vragen hoe daqhboard starten
 //        Intent menuIntent = new Intent(this, Dashboard.class);
 //        startActivity(menuIntent);
