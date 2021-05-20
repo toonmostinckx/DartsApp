@@ -50,6 +50,7 @@ public class Results extends AppCompatActivity {
     private TextView txtResponse;
     private String[] nameOfAllUsersInDB;
     private String[] highestScoreOfAllUsersInDB;
+    private int numberOfRequestsToDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,8 @@ public class Results extends AppCompatActivity {
         setTextViewsVisible(highestScoreAllPlayersTextView, changeArrayListIntegerToArrayListString(highestScoreAllPlayersInteger));
         
         txtResponse = (TextView) findViewById(R.id.txtResponse);
+
+        numberOfRequestsToDB = 0;
        
     }
 
@@ -146,7 +149,8 @@ public class Results extends AppCompatActivity {
                             responseString += curObject.getString( "highestScore" ) + ",";
                         }
                         highestScoreOfAllUsersInDB = createArrayListFromResponseString(responseString);
-                        txtResponse.setText(responseString);
+                        numberOfRequestsToDB++;
+                        //txtResponse.setText(responseString);
                     }
                     catch( JSONException e )
                     {
@@ -165,16 +169,11 @@ public class Results extends AppCompatActivity {
         return responseArray;
     }
 
-    public void clickedOnBtnMenu(View caller){
-        getHighestScoreInDataBase(caller);
-        getNamesOfPlayersInDB(caller);
-    }
-
     public void getNamesOfPlayersInDB(View v)
     {
         requestQueue = Volley.newRequestQueue( this );
-        String requestURL = "https://studev.groept.be/api/a20sd111/getAllNames";
 
+        String requestURL = "https://studev.groept.be/api/a20sd111/getAllNames";
         StringRequest submitRequest = new StringRequest(Request.Method.GET, requestURL,
 
                 response -> {
@@ -187,6 +186,7 @@ public class Results extends AppCompatActivity {
                             responseString += curObject.getString( "name" ) + ",";
                         }
                         nameOfAllUsersInDB = createArrayListFromResponseString(responseString);
+                        numberOfRequestsToDB++;
                         //txtResponse.setText(responseString);
                     }
                     catch( JSONException e )
@@ -199,11 +199,13 @@ public class Results extends AppCompatActivity {
         );
 
         requestQueue.add(submitRequest);
+        requestQueue.getResponseDelivery();
     }
+
     private void playersInDB(ArrayList<String> nameOFPlayersWhoGetToZeroPoints){
-        for(String namePlayer: nameOFPlayersWhoGetToZeroPoints){
-            if(true == playerInDB(namePlayer)){
-                updateHighScore(namePlayer, true);
+        for(int i = 0; i <= numberOfPlayers; i++){
+            if(true == playerInDB(nameOFPlayersWhoGetToZeroPoints.get(i))){
+                updateHighScore(nameOFPlayersWhoGetToZeroPoints.get(i), true);
             }
         }
     }
@@ -211,7 +213,9 @@ public class Results extends AppCompatActivity {
     private boolean playerInDB(String player){
         boolean playerInDB = false;
         for(String userInDB: nameOfAllUsersInDB){
-            playerInDB = true;
+            if(userInDB == player){
+                playerInDB = true;
+            }
         }
         if(playerInDB == false){
             updateHighScore(player, false);
@@ -221,6 +225,14 @@ public class Results extends AppCompatActivity {
 
     private void updateHighScore(String name, boolean alreadyInDB){
 
+    }
+
+    public void clickedOnBtnMenu(View caller){
+        getHighestScoreInDataBase(caller);
+        getNamesOfPlayersInDB(caller);
+        if (numberOfRequestsToDB == 2) {
+            playersInDB(rankingOfPlayersNames);
+        }
     }
 //    public void clickedOnBtnMenu(View caller){ aan gijs vragen hoe daqhboard starten
 //        Intent menuIntent = new Intent(this, Dashboard.class);
