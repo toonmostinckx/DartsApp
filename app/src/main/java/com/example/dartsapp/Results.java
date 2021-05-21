@@ -206,7 +206,7 @@ public class Results extends AppCompatActivity {
     {
         requestQueue = Volley.newRequestQueue( this );
 
-        String requestURL = "https://studev.groept.be/api/a20sd111/updateHighestScoreOfPlayer/" + userName + "/" + highestScore;
+        String requestURL = "https://studev.groept.be/api/a20sd111/updateHighestScoreOfPlayer/" + userName + "/" + highestScore + "/" + highestScore;
         StringRequest submitRequest = new StringRequest(Request.Method.GET, requestURL,
 
                 response -> {
