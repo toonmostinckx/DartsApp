@@ -51,6 +51,7 @@ public class Results extends AppCompatActivity {
     private String[] nameOfAllUsersInDB;
     private String[] highestScoreOfAllUsersInDB;
     private int numberOfRequestsToDB;
+    private int indexInDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,32 +200,65 @@ public class Results extends AppCompatActivity {
         );
 
         requestQueue.add(submitRequest);
-        requestQueue.getResponseDelivery();
+    }
+
+    public void updateHighestScoreOfUserInDB(String userName, String highestScore)
+    {
+        requestQueue = Volley.newRequestQueue( this );
+
+        String requestURL = "https://studev.groept.be/api/a20sd111/updateHighestScoreOfPlayer/" + userName + "/" + highestScore;
+        StringRequest submitRequest = new StringRequest(Request.Method.GET, requestURL,
+
+                response -> {
+                    try {
+                        JSONArray responseArray = new JSONArray(response);
+                        String responseString = "";
+                        for( int i = 0; i < responseArray.length(); i++ )
+                        {
+                            JSONObject curObject = responseArray.getJSONObject( i );
+                            responseString += curObject.getString( "name" ) + ",";
+                        }
+
+                        txtResponse.setText(responseString);
+                    }
+                    catch( JSONException e )
+                    {
+                        Log.e( "Database", e.getMessage(), e );
+                    }
+                },
+
+                error -> txtResponse.setText( error.getLocalizedMessage() )
+        );
+
+        requestQueue.add(submitRequest);
     }
 
     private void playersInDB(ArrayList<String> nameOFPlayersWhoGetToZeroPoints){
         for(int i = 0; i <= numberOfPlayers; i++){
             if(true == playerInDB(nameOFPlayersWhoGetToZeroPoints.get(i))){
-                updateHighScore(nameOFPlayersWhoGetToZeroPoints.get(i), true);
+                updateHighScore(nameOFPlayersWhoGetToZeroPoints.get(i), indexInDB, highestScoreAllPlayersInteger.get(i));
             }
         }
     }
 
     private boolean playerInDB(String player){
         boolean playerInDB = false;
+        indexInDB = 0;
         for(String userInDB: nameOfAllUsersInDB){
-            if(userInDB == player){
+            if(userInDB.equals(player)){
                 playerInDB = true;
             }
-        }
-        if(playerInDB == false){
-            updateHighScore(player, false);
+            if(playerInDB == false) {
+                indexInDB++;
+            }
         }
         return playerInDB;
     }
 
-    private void updateHighScore(String name, boolean alreadyInDB){
-
+    private void updateHighScore(String name, int indexOfUserInDB, Integer highestScoreOfPlayer){
+            if(highestScoreOfAllUsersInDB[indexOfUserInDB].equals("null")){
+                updateHighestScoreOfUserInDB(nameOfAllUsersInDB[indexOfUserInDB], highestScoreOfPlayer.toString());
+            }
     }
 
     public void clickedOnBtnMenu(View caller){
@@ -238,4 +272,5 @@ public class Results extends AppCompatActivity {
 //        Intent menuIntent = new Intent(this, Dashboard.class);
 //        startActivity(menuIntent);
 //    }
+    //activity met intent sign in meegeven
 }

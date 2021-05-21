@@ -157,7 +157,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
         Intent intent = new Intent(this, Dashboard.class);
         intent.putExtra("SigninType", "Manual");
-        intent.putExtra("ID", ID);
+        intent.putExtra("ID", ID);  //enkel bij manual
         startActivity(intent);
     }
 }
