@@ -24,21 +24,26 @@ public class InitializingGame extends AppCompatActivity {
     private EditText player3;
     private EditText player4;
     private Button throwCompleted;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initializing_game);
+        Bundle extras = getIntent().getExtras();
         btnPlus = (Button) findViewById(R.id.btnPlus);
         btnMinus = (Button) findViewById(R.id.btnMinus);
         numberOfPlayers = (TextView) findViewById((R.id.numbersOfPlayers));
         gameMode_501 =(CheckBox) findViewById(R.id.gameMode_501);
         gameMode_301 = (CheckBox) findViewById((R.id.gameMode_301));
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
+
         player1 = (EditText) findViewById(R.id.txtPlayer1);
         player2 = (EditText) findViewById(R.id.txtPlayer2);
         player3 = (EditText) findViewById(R.id.txtPlayer3);
         player4 = (EditText) findViewById(R.id.txtPlayer4);
+
+        userID = extras.getString("userID");
     }
 
     public int getNumberOfPlayers() {
@@ -100,6 +105,7 @@ public class InitializingGame extends AppCompatActivity {
         intent.putExtra("nameOfPlayer2", player2.getText().toString());
         intent.putExtra("nameOfPlayer3", player3.getText().toString());
         intent.putExtra("nameOfPlayer4", player4.getText().toString());
+        intent.putExtra("userID", userID);
         startActivity(intent);
     }
 }

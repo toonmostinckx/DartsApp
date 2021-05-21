@@ -126,6 +126,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     private void startNewGame(){
         Intent intent = new Intent(this, InitializingGame.class);
+        intent.putExtra("userID", ID);
         startActivity(intent);
     }
 

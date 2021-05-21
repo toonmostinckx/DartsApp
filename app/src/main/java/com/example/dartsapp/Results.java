@@ -52,6 +52,7 @@ public class Results extends AppCompatActivity {
     private String[] highestScoreOfAllUsersInDB;
     private int numberOfRequestsToDB;
     private int indexInDB;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,7 @@ public class Results extends AppCompatActivity {
         txtResponse = (TextView) findViewById(R.id.txtResponse);
 
         numberOfRequestsToDB = 0;
-       
+        userID = extras.getString("userID");
     }
 
     private ArrayList<String> changeArrayListIntegerToArrayListString(ArrayList<Integer> arrayListInteger){
@@ -133,7 +134,7 @@ public class Results extends AppCompatActivity {
         startActivity(newGameIntent);
     }
 
-    public void getHighestScoreInDataBase(View v)
+    public void getHighestScoreInDataBase()
     {
         requestQueue = Volley.newRequestQueue( this );
         String requestURL = "https://studev.groept.be/api/a20sd111/getHighestScoreOfPlayers";
@@ -170,7 +171,7 @@ public class Results extends AppCompatActivity {
         return responseArray;
     }
 
-    public void getNamesOfPlayersInDB(View v)
+    public void getNamesOfPlayersInDB()
     {
         requestQueue = Volley.newRequestQueue( this );
 
@@ -262,15 +263,15 @@ public class Results extends AppCompatActivity {
     }
 
     public void clickedOnBtnMenu(View caller){
-        getHighestScoreInDataBase(caller);
-        getNamesOfPlayersInDB(caller);
+        getHighestScoreInDataBase();
+        getNamesOfPlayersInDB();
         if (numberOfRequestsToDB == 2) {
             playersInDB(rankingOfPlayersNames);
         }
+        Intent menuIntent = new Intent(this, Dashboard.class);
+        menuIntent.putExtra("SigninType", "Manual");
+        menuIntent.putExtra("ID", userID);
+        startActivity(menuIntent);
     }
-//    public void clickedOnBtnMenu(View caller){ aan gijs vragen hoe daqhboard starten
-//        Intent menuIntent = new Intent(this, Dashboard.class);
-//        startActivity(menuIntent);
-//    }
-    //activity met intent sign in meegeven
+
 }

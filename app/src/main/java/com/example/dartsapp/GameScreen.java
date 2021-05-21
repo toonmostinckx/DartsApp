@@ -42,6 +42,7 @@ public class GameScreen extends AppCompatActivity {
     private ArrayList<Integer> numberOfThrowsOfAllPlayers;
     private ArrayList<Integer> highestThrowOfAllPlayers;
     private ArrayList<Integer> highestThrowOfAllPlayersInOrderOfRanking;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,8 @@ public class GameScreen extends AppCompatActivity {
         throwCompleted = (Button) findViewById(R.id.btnThrowCompleted);
 
         numberOfPlayers = getNumberOfPlayers(extras);
+
+        userID = extras.getString("userID");
     }
 
     private void addNumberOfThrowsOfAllPlayers(int numberOfThrows){
@@ -255,6 +258,7 @@ public class GameScreen extends AppCompatActivity {
             intentGameScreen.putExtra("numberOfThrowsOfAllPlayers", numberOfThrowsOfAllPlayers);
             intentGameScreen.putExtra("numberOfPlayers", numberOfPlayers);
             intentGameScreen.putExtra("highestScoreInOneThrowOFAllPlayers", highestThrowOfAllPlayersInOrderOfRanking);
+            intentGameScreen.putExtra("userID", userID);
             startActivity(intentGameScreen);
         }
     }
