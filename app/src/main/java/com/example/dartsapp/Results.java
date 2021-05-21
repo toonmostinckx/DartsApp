@@ -100,8 +100,6 @@ public class Results extends AppCompatActivity {
         highestScoreAllPlayersInteger = extras.getIntegerArrayList("highestScoreInOneThrowOFAllPlayers");
 
         setTextViewsVisible(highestScoreAllPlayersTextView, changeArrayListIntegerToArrayListString(highestScoreAllPlayersInteger));
-        
-        txtResponse = (TextView) findViewById(R.id.txtResponse);
 
         numberOfRequestsToDB = 0;
         userID = extras.getString("userID");

@@ -10,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 public class InitializingGame extends AppCompatActivity {
     private Button btnPlus;
     private Button btnMinus;
@@ -23,7 +25,7 @@ public class InitializingGame extends AppCompatActivity {
     private EditText player2;
     private EditText player3;
     private EditText player4;
-    private Button throwCompleted;
+    private ArrayList<EditText> playersName;
     private String userID;
 
     @Override
@@ -38,10 +40,15 @@ public class InitializingGame extends AppCompatActivity {
         gameMode_301 = (CheckBox) findViewById((R.id.gameMode_301));
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
+        playersName = new ArrayList<>();
         player1 = (EditText) findViewById(R.id.txtPlayer1);
         player2 = (EditText) findViewById(R.id.txtPlayer2);
         player3 = (EditText) findViewById(R.id.txtPlayer3);
         player4 = (EditText) findViewById(R.id.txtPlayer4);
+        playersName.add(player1);
+        playersName.add(player2);
+        playersName.add(player3);
+        playersName.add(player4);
 
         userID = extras.getString("userID");
     }
@@ -82,16 +89,23 @@ public class InitializingGame extends AppCompatActivity {
         int players = Integer.parseInt(numberOfPlayers.getText().toString()) + 1;
         numberOfPlayers.setText(Integer.toString(players));
         btnMinus.setEnabled(true);
+        playersName.get(players - 1).setVisibility(View.VISIBLE);
+        if(players == 4){
+            btnPlus.setEnabled(false);
+        }
     }
 
     public void onBtnMinus_Clicked(View caller){
         int players = Integer.parseInt(numberOfPlayers.getText().toString()) - 1;
-        if(players <= 1){
+        if(players == 2){
             btnMinus.setEnabled(false);
+            btnPlus.setEnabled(true);
             numberOfPlayers.setText(Integer.toString(players));
+            playersName.get(2).setVisibility(View.GONE);
         }
         else {
             numberOfPlayers.setText(Integer.toString(players));
+            playersName.get(players).setVisibility(View.GONE);
         }
     }
 
