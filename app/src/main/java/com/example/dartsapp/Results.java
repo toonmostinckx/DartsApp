@@ -132,11 +132,6 @@ public class Results extends AppCompatActivity {
         }
     }
 
-    public void clickedOnBtnStartNewGame(View caller){
-        Intent newGameIntent = new Intent (this, InitializingGame.class);
-        startActivity(newGameIntent);
-    }
-
     public void getHighestScoreInDataBase()
     {
         requestQueue = Volley.newRequestQueue( this );
@@ -263,6 +258,15 @@ public class Results extends AppCompatActivity {
         menuIntent.putExtra("SigninType", "Manual");
         menuIntent.putExtra("ID", userID);
         startActivity(menuIntent);
+    }
+
+    public void clickedOnBtnStartNewGame(View caller){
+        getHighestScoreInDataBase();
+
+        Intent newGameIntent = new Intent (this, InitializingGame.class);
+        newGameIntent.putExtra("SigninType", "Manual");
+        newGameIntent.putExtra("userID", userID);
+        startActivity(newGameIntent);
     }
 
 }
