@@ -26,6 +26,8 @@ import org.json.JSONObject;
 public class AccountScreen extends AppCompatActivity implements View.OnClickListener{
     TextView nameBox;
     TextView emailBox;
+
+
     ImageView profilePicture;
 
     String signinType;

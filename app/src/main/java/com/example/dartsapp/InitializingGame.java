@@ -35,6 +35,7 @@ public class InitializingGame extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         btnPlus = (Button) findViewById(R.id.btnPlus);
         btnMinus = (Button) findViewById(R.id.btnMinus);
+        btnMinus.setEnabled(false);
         numberOfPlayers = (TextView) findViewById((R.id.numbersOfPlayers));
         gameMode_501 =(CheckBox) findViewById(R.id.gameMode_501);
         gameMode_301 = (CheckBox) findViewById((R.id.gameMode_301));

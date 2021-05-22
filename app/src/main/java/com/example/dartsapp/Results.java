@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -53,6 +54,8 @@ public class Results extends AppCompatActivity {
     private int numberOfRequestsToDB;
     private int indexInDB;
     private String userID;
+
+    private Button btnNewGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,8 @@ public class Results extends AppCompatActivity {
 
         numberOfRequestsToDB = 0;
         userID = extras.getString("userID");
+
+        btnNewGame = (Button) findViewById(R.id.btnNewGame);
     }
 
     private ArrayList<String> changeArrayListIntegerToArrayListString(ArrayList<Integer> arrayListInteger){
@@ -138,33 +143,31 @@ public class Results extends AppCompatActivity {
         String requestURL = "https://studev.groept.be/api/a20sd111/getHighestScoreOfPlayers";
 
         StringRequest submitRequest = new StringRequest(Request.Method.GET, requestURL,
-
                 response -> {
                     try {
                         JSONArray responseArray = new JSONArray(response);
                         String responseString = "";
-                        for( int i = 0; i < responseArray.length(); i++ )
-                        {
-                            JSONObject curObject = responseArray.getJSONObject( i );
-                            responseString += curObject.getString( "highestScore" ) + ",";
+                        for (int i = 0; i < responseArray.length(); i++) {
+                            JSONObject curObject = responseArray.getJSONObject(i);
+                            responseString += curObject.getString("highestScore") + ",";
+                            getNamesOfPlayersInDB();
                         }
+                        Log.e("Database", "rcreateArrayListFromResponseString");
                         highestScoreOfAllUsersInDB = createArrayListFromResponseString(responseString);
-                        numberOfRequestsToDB++;
-                        //txtResponse.setText(responseString);
-                    }
-                    catch( JSONException e )
-                    {
-                        Log.e( "Database", e.getMessage(), e );
+                        getNamesOfPlayersInDB();
+                    } catch (JSONException e) {
+                        Log.e("Database", e.getMessage(), e);
                     }
                 },
-
-                error -> txtResponse.setText( error.getLocalizedMessage() )
+                error -> txtResponse.setText(error.getLocalizedMessage())
         );
+
 
         requestQueue.add(submitRequest);
     }
 
-    private String[] createArrayListFromResponseString(String responseString){
+    private String[] createArrayListFromResponseString(String responseString)
+    {
         String responseArray [] = responseString.split(",");
         return responseArray;
     }
@@ -186,7 +189,7 @@ public class Results extends AppCompatActivity {
                             responseString += curObject.getString( "name" ) + ",";
                         }
                         nameOfAllUsersInDB = createArrayListFromResponseString(responseString);
-                        numberOfRequestsToDB++;
+                        playersInDB(rankingOfPlayersNames);
                         //txtResponse.setText(responseString);
                     }
                     catch( JSONException e )
@@ -203,22 +206,16 @@ public class Results extends AppCompatActivity {
 
     public void updateHighestScoreOfUserInDB(String userName, String highestScore)
     {
-        requestQueue = Volley.newRequestQueue( this );
+        RequestQueue requestQueues = Volley.newRequestQueue(this);;
 
-        String requestURL = "https://studev.groept.be/api/a20sd111/updateHighestScoreOfPlayer/" + userName + "/" + highestScore + "/" + highestScore;
-        StringRequest submitRequest = new StringRequest(Request.Method.GET, requestURL,
+        String requestURL = "https://studev.groept.be/api/a20sd111/updateHighestScoreOfPlayer/" + highestScore + "/" + userName + "/" + highestScore;
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
                 response -> {
                     try {
-                        JSONArray responseArray = new JSONArray(response);
+                        JSONObject responseJSON = response.getJSONObject(0);
                         String responseString = "";
-                        for( int i = 0; i < responseArray.length(); i++ )
-                        {
-                            JSONObject curObject = responseArray.getJSONObject( i );
-                            responseString += curObject.getString( "name" ) + ",";
-                        }
 
-                        txtResponse.setText(responseString);
                     }
                     catch( JSONException e )
                     {
@@ -233,9 +230,9 @@ public class Results extends AppCompatActivity {
     }
 
     private void playersInDB(ArrayList<String> nameOFPlayersWhoGetToZeroPoints){
-        for(int i = 0; i <= numberOfPlayers; i++){
+        for(int i = 0; i < numberOfPlayers; i++){
             if(true == playerInDB(nameOFPlayersWhoGetToZeroPoints.get(i))){
-                updateHighScore(nameOFPlayersWhoGetToZeroPoints.get(i), indexInDB, highestScoreAllPlayersInteger.get(i));
+                updateHighScore(nameOFPlayersWhoGetToZeroPoints.get(i), highestScoreAllPlayersInteger.get(i));
             }
         }
     }
@@ -254,18 +251,14 @@ public class Results extends AppCompatActivity {
         return playerInDB;
     }
 
-    private void updateHighScore(String name, int indexOfUserInDB, Integer highestScoreOfPlayer){
-            if(highestScoreOfAllUsersInDB[indexOfUserInDB].equals("null")){
-                updateHighestScoreOfUserInDB(nameOfAllUsersInDB[indexOfUserInDB], highestScoreOfPlayer.toString());
-            }
+    private void updateHighScore(String name, Integer highestScoreOfPlayer){
+        updateHighestScoreOfUserInDB(name, highestScoreOfPlayer.toString());
     }
 
+    //(new Handler()).postDelayed(this::yourMethod, 5000);
     public void clickedOnBtnMenu(View caller){
         getHighestScoreInDataBase();
-        getNamesOfPlayersInDB();
-        if (numberOfRequestsToDB == 2) {
-            playersInDB(rankingOfPlayersNames);
-        }
+
         Intent menuIntent = new Intent(this, Dashboard.class);
         menuIntent.putExtra("SigninType", "Manual");
         menuIntent.putExtra("ID", userID);
