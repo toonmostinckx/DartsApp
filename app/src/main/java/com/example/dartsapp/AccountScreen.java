@@ -26,7 +26,7 @@ import org.json.JSONObject;
 public class AccountScreen extends AppCompatActivity implements View.OnClickListener{
     TextView nameBox;
     TextView emailBox;
-
+    TextView hsBox;
 
     ImageView profilePicture;
 
@@ -39,9 +39,9 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_screen);
-
         nameBox = findViewById(R.id.AccountScreen_NameBox);
         emailBox = findViewById(R.id.AccountScreen_EmailBox);
+        hsBox = findViewById(R.id.accountScreen_HighestScoreBox);
         profilePicture = findViewById(R.id.AccountScreen_ProfilePicture);
 
         backButton = findViewById(R.id.AccountScreen_BackButton);
@@ -76,6 +76,9 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
             if(ProfilePictureURI != null){
                 Picasso.get().load(ProfilePictureURI.toString()).into(profilePicture);
             }
+
+            String hsBoxText = "Make an account to view your highscore";
+            hsBox.setText(hsBoxText);
         }
     }
 
@@ -93,12 +96,19 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
                         JSONObject responseJSON = response.getJSONObject(0);
                         String Name = responseJSON.get("Name").toString();
                         String Email = responseJSON.get("Email").toString();
+                        String highestScore = responseJSON.get("highestScore").toString();
 
                         String nameBoxText = "Username: " + Name;
                         nameBox.setText(nameBoxText);
 
                         String emailBoxText = "Email: " + Email;
                         emailBox.setText(emailBoxText);
+
+                        if(highestScore.equals("null")){
+                            highestScore = " No games played yet";
+                        }
+                        String hsBoxText = "Highscore: " + highestScore;
+                        hsBox.setText(hsBoxText);
 
                     } catch (JSONException e) {
                         e.printStackTrace();

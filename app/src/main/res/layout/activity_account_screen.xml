@@ -33,13 +33,12 @@
         android:id="@+id/AccountScreen_EmailBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="AccountScreen_EmailBox"
         android:translationX="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AccountScreen_NameBox"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintTop_toBottomOf="@+id/AccountScreen_NameBox" />
 
     <TextView
         android:id="@+id/AccountScreen_NameBox"
@@ -52,5 +51,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AccountScreen_ProfilePicture"
         app:layout_constraintVertical_bias="0.24000001" />
+
+    <TextView
+        android:id="@+id/accountScreen_HighestScoreBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="HighestScore"
+        android:translationX="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AccountScreen_EmailBox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
