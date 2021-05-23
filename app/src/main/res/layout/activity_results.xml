@@ -149,6 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/highest_score_1_throw_player1"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
         app:layout_constraintTop_toBottomOf="@+id/highestScoreInOneThrow" />
 
@@ -158,6 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/highest_score_1_throw_player2"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
         app:layout_constraintTop_toBottomOf="@+id/highestScorePlayer1" />
 
@@ -167,6 +169,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/highest_score_1_throw_player3"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
         app:layout_constraintTop_toBottomOf="@+id/highestScorePlayer2" />
 
@@ -176,7 +179,44 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/highest_score_1_throw_player4"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/highestScoreInOneThrow"
         app:layout_constraintTop_toBottomOf="@+id/highestScorePlayer3" />
+
+    <Button
+        android:id="@+id/btnNewGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="clickedOnBtnStartNewGame"
+        android:text="@string/start_new_game"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnGoToMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="clickedOnBtnMenu"
+        android:text="@string/menu"
+        app:layout_constraintBottom_toTopOf="@+id/btnNewGame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtResponse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/databaseinfo"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btnGoToMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numberOfThrows" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

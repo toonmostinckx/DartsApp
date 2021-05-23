@@ -40,6 +40,9 @@ public class GameScreen extends AppCompatActivity {
     private ArrayList<String> ranking;
 
     private ArrayList<Integer> numberOfThrowsOfAllPlayers;
+    private ArrayList<Integer> highestThrowOfAllPlayers;
+    private ArrayList<Integer> highestThrowOfAllPlayersInOrderOfRanking;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,8 @@ public class GameScreen extends AppCompatActivity {
         ranking = new ArrayList<>();
         playersNames = new ArrayList<>();
         numberOfThrowsOfAllPlayers = new ArrayList<>();
+        highestThrowOfAllPlayers = new ArrayList<>();
+        highestThrowOfAllPlayersInOrderOfRanking = new ArrayList<>();
 
         nameOfPlayer1 = (TextView) findViewById((R.id.namePlayer1));
         nameOfPlayer1.setBackgroundColor(0xFF00FF00);
@@ -89,6 +94,8 @@ public class GameScreen extends AppCompatActivity {
         throwCompleted = (Button) findViewById(R.id.btnThrowCompleted);
 
         numberOfPlayers = getNumberOfPlayers(extras);
+
+        userID = extras.getString("userID");
     }
 
     private void addNumberOfThrowsOfAllPlayers(int numberOfThrows){
@@ -109,11 +116,11 @@ public class GameScreen extends AppCompatActivity {
     }
 
     private int calculateNumberOfThrow(int timePushedBtnThrow){
-        if(timePushedBtnThrow / 3 == 0){
+        if(timePushedBtnThrow / numberOfPlayers== 0){
             return 1;
         }
         else{
-            return timePushedBtnThrow / 3;
+            return timePushedBtnThrow / numberOfPlayers + 1;
         }
     }
 
@@ -139,7 +146,6 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void clickedOnBtnThrowCompleted(View caller){
-        numberOfTimesPushedOnThrowBtn++;
         if(player >= numberOfPlayers){
             player = 0;
             deleteBackGroundColor(player);
@@ -153,6 +159,7 @@ public class GameScreen extends AppCompatActivity {
             player++;
             setBackGroundColorForNextPlayer(player);
         }
+        numberOfTimesPushedOnThrowBtn++;
     }
 
     private void setPoints(TextView scorePlayer){
@@ -169,6 +176,8 @@ public class GameScreen extends AppCompatActivity {
         }
         if(pointsAfterThrow == 0){
             addPlayerToRanking(playersNames.get(player));
+            Integer scoreOfPlayer = highestThrowOfAllPlayers.get(player);
+            highestThrowOfAllPlayersInOrderOfRanking.add(scoreOfPlayer);
             checkForTheEndOfTheGame();
             return 0;
         }
@@ -181,7 +190,9 @@ public class GameScreen extends AppCompatActivity {
         int pointsThrow1 = Integer.parseInt(points1.getSelectedItem().toString()) * (multiplyFactor1.getSelectedItemPosition() + 1);
         int pointsThrow2 = Integer.parseInt(points2.getSelectedItem().toString()) * (multiplyFactor2.getSelectedItemPosition() + 1);
         int pointsThrow3 = Integer.parseInt(points3.getSelectedItem().toString()) * (multiplyFactor3.getSelectedItemPosition() + 1);
-        return (pointsThrow1 + pointsThrow2 +pointsThrow3);
+        int totalScoreOfThrow = pointsThrow1 + pointsThrow2 +pointsThrow3;
+        setHighestScoreInOneThrow(player, totalScoreOfThrow);
+        return (totalScoreOfThrow);
     }
 
     private void setNamesOfPlayersVisible(Bundle extras){
@@ -212,6 +223,7 @@ public class GameScreen extends AppCompatActivity {
             if(playerInRanking == false){
                 ranking.add(playersNameView.getText().toString());
                 addNumberOfThrowsOfAllPlayers(-1); //add number -1 to last player who didnt get to zero points
+                highestThrowOfAllPlayersInOrderOfRanking.add(numberOfPlayers - 1, -1); //add number -1 to last player who didnt get to zero points
             }
         }
     }
@@ -226,6 +238,18 @@ public class GameScreen extends AppCompatActivity {
         return playerInRanking;
     }
 
+    private void setHighestScoreInOneThrow(int player, int scoreInOneThrow){ //create list with best score og player one at index zero
+        if(highestThrowOfAllPlayers.size() >= numberOfPlayers ){
+            if(scoreInOneThrow > highestThrowOfAllPlayers.get(player)){
+                highestThrowOfAllPlayers.remove(player);
+                highestThrowOfAllPlayers.add(player, scoreInOneThrow);
+            }
+        }
+        else {
+            highestThrowOfAllPlayers.add(player, scoreInOneThrow);
+        }
+    }
+
     private void checkForTheEndOfTheGame(){
         if(ranking.size() == numberOfPlayers - 1){
             addLastPlayerInRanking();
@@ -233,6 +257,8 @@ public class GameScreen extends AppCompatActivity {
             intentGameScreen.putExtra("ranking", ranking);
             intentGameScreen.putExtra("numberOfThrowsOfAllPlayers", numberOfThrowsOfAllPlayers);
             intentGameScreen.putExtra("numberOfPlayers", numberOfPlayers);
+            intentGameScreen.putExtra("highestScoreInOneThrowOFAllPlayers", highestThrowOfAllPlayersInOrderOfRanking);
+            intentGameScreen.putExtra("userID", userID);
             startActivity(intentGameScreen);
         }
     }
