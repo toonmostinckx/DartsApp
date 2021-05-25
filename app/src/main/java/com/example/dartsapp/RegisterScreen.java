@@ -87,9 +87,44 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
         //now register in the database
         User tmp = new User(email, passWord);
-        checkExistingEmail(tmp);
+        checkExistingUsername(tmp);
     }
 
+    private void checkExistingUsername(User user) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        String requestURL = "https://studev.groept.be/api/a20sd111/checkExistingUser/" + nameBox.getText().toString();
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                response -> {
+                    try {
+                        JSONObject cur = response.getJSONObject(0);
+                        cur.get("Name");
+                        Log.e("Register", "Register user failed");
+                        String errorMessage = "Username already registered";
+                        errorMessageBox.setText(errorMessage);
+
+                        //clear passwords
+                        passwordBox.setText("");
+                        repeatPasswordBox.setText("");
+                    } catch (JSONException e) {
+                        checkExistingEmail(user);
+                    }
+                },
+                error -> {
+                    Log.e("Register", "Register user failed");
+                    String errorMessage = "No connectivity to the database";
+                    errorMessageBox.setText(errorMessage);
+
+                    //clear passwords
+                    passwordBox.setText("");
+                    repeatPasswordBox.setText("");
+                }
+        );
+
+        requestQueue.add(submitRequest);
+    }
 
     private void checkExistingEmail(User user) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
