@@ -27,12 +27,14 @@ public class InitializingGame extends AppCompatActivity {
     private EditText player4;
     private ArrayList<EditText> playersName;
     private String userID;
+    private String signinType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initializing_game);
         Bundle extras = getIntent().getExtras();
+        signinType = extras.getString("SigninType");
         btnPlus = (Button) findViewById(R.id.btnPlus);
         btnMinus = (Button) findViewById(R.id.btnMinus);
         btnMinus.setEnabled(false);
@@ -120,7 +122,12 @@ public class InitializingGame extends AppCompatActivity {
         intent.putExtra("nameOfPlayer2", player2.getText().toString());
         intent.putExtra("nameOfPlayer3", player3.getText().toString());
         intent.putExtra("nameOfPlayer4", player4.getText().toString());
-        intent.putExtra("userID", userID);
+        intent.putExtra("SigninType", signinType);
+
+        if(signinType.equals("Manual")){
+            intent.putExtra("userID", userID);
+        }
+        startActivity(intent);
         startActivity(intent);
     }
 }

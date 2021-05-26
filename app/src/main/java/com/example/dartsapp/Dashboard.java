@@ -126,7 +126,10 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     private void startNewGame(){
         Intent intent = new Intent(this, InitializingGame.class);
-        intent.putExtra("userID", ID);
+        intent.putExtra("SigninType", signinType);
+        if(signinType.equals("Manual")){
+            intent.putExtra("userID", ID);
+        }
         startActivity(intent);
     }
 
@@ -134,7 +137,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         Intent intent = new Intent(this, AccountScreen.class);
         intent.putExtra("SigninType", signinType);
         if(signinType.equals("Manual")){
-            intent.putExtra("ID", ID);
+            intent.putExtra("userID", ID);
         }
         startActivity(intent);
     }

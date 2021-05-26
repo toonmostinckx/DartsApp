@@ -43,6 +43,7 @@ public class GameScreen extends AppCompatActivity {
     private ArrayList<Integer> highestThrowOfAllPlayers;
     private ArrayList<Integer> highestThrowOfAllPlayersInOrderOfRanking;
     private String userID;
+    private String signinType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class GameScreen extends AppCompatActivity {
         playersNames.add(nameOfPlayer4);
 
         Bundle extras = getIntent().getExtras();
+        signinType = extras.getString("SigninType");
 
         setNameOfPlayer(nameOfPlayer1, extras, "nameOfPlayer1");
         setNameOfPlayer(nameOfPlayer2, extras, "nameOfPlayer2");
@@ -94,8 +96,9 @@ public class GameScreen extends AppCompatActivity {
         throwCompleted = (Button) findViewById(R.id.btnThrowCompleted);
 
         numberOfPlayers = getNumberOfPlayers(extras);
-
-        userID = extras.getString("userID");
+        if(signinType.equals("Manual")){
+            userID = extras.getString("userID");
+        }
     }
 
     private void addNumberOfThrowsOfAllPlayers(int numberOfThrows){
@@ -258,7 +261,10 @@ public class GameScreen extends AppCompatActivity {
             intentGameScreen.putExtra("numberOfThrowsOfAllPlayers", numberOfThrowsOfAllPlayers);
             intentGameScreen.putExtra("numberOfPlayers", numberOfPlayers);
             intentGameScreen.putExtra("highestScoreInOneThrowOFAllPlayers", highestThrowOfAllPlayersInOrderOfRanking);
-            intentGameScreen.putExtra("userID", userID);
+            intentGameScreen.putExtra("SigninType", signinType);
+            if(signinType.equals("Manual")) {
+                intentGameScreen.putExtra("userID", userID);
+            }
             startActivity(intentGameScreen);
         }
     }

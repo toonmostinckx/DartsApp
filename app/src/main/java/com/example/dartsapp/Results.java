@@ -54,6 +54,7 @@ public class Results extends AppCompatActivity {
     private int numberOfRequestsToDB;
     private int indexInDB;
     private String userID;
+    private String signinType;
 
     private Button btnNewGame;
 
@@ -62,6 +63,7 @@ public class Results extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
         Bundle extras = getIntent().getExtras();
+        signinType = extras.getString("SigninType");
 
         rankingPlayersTextView = new ArrayList<>();
         firstPlayerName = (TextView) findViewById(R.id.firstPlayerName);
@@ -105,7 +107,10 @@ public class Results extends AppCompatActivity {
         setTextViewsVisible(highestScoreAllPlayersTextView, changeArrayListIntegerToArrayListString(highestScoreAllPlayersInteger));
 
         numberOfRequestsToDB = 0;
-        userID = extras.getString("userID");
+
+        if(signinType.equals("Manual")){
+            userID = extras.getString("userID");
+        }
 
         btnNewGame = (Button) findViewById(R.id.btnNewGame);
     }
@@ -255,8 +260,10 @@ public class Results extends AppCompatActivity {
         getHighestScoreInDataBase();
 
         Intent menuIntent = new Intent(this, Dashboard.class);
-        menuIntent.putExtra("SigninType", "Manual");
-        menuIntent.putExtra("ID", userID);
+        menuIntent.putExtra("SigninType", signinType);
+        if(signinType.equals("Manual")) {
+            menuIntent.putExtra("ID", userID);
+        }
         startActivity(menuIntent);
     }
 
@@ -264,8 +271,10 @@ public class Results extends AppCompatActivity {
         getHighestScoreInDataBase();
 
         Intent newGameIntent = new Intent (this, InitializingGame.class);
-        newGameIntent.putExtra("SigninType", "Manual");
-        newGameIntent.putExtra("userID", userID);
+        newGameIntent.putExtra("SigninType", signinType);
+        if(signinType.equals("Manual")) {
+            newGameIntent.putExtra("ID", userID);
+        }
         startActivity(newGameIntent);
     }
 
