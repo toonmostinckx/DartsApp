@@ -82,7 +82,7 @@ public class AccountScreen extends AppCompatActivity implements View.OnClickList
     }
 
     void UpdateUIManual(Bundle intent){
-        ID = intent.get("ID").toString();
+        ID = intent.get("userID").toString();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
